@@ -272,6 +272,46 @@ function FeatureCard({ icon, title, desc, color }) {
 }
 
 /* ═══════════════════════════════════════════
+   FAQ ACCORDION ITEM
+   ═══════════════════════════════════════════ */
+function FaqItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{
+      borderBottom: `1px solid ${C.border}`,
+    }}>
+      <button
+        onClick={() => setOpen(v => !v)}
+        style={{
+          width: '100%', background: 'none', border: 'none', cursor: 'pointer',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '18px 0', textAlign: 'left',
+        }}
+      >
+        <span style={{
+          fontFamily: F.display, fontSize: '1rem', fontWeight: 600, color: C.text,
+          lineHeight: 1.4, paddingRight: 16,
+        }}>{question}</span>
+        <span style={{
+          fontFamily: F.mono, fontSize: '1.2rem', color: C.textSec,
+          transition: 'transform 0.2s', transform: open ? 'rotate(45deg)' : 'rotate(0)',
+          flexShrink: 0,
+        }}>+</span>
+      </button>
+      <div style={{
+        maxHeight: open ? 300 : 0, overflow: 'hidden',
+        transition: 'max-height 0.3s ease',
+      }}>
+        <p style={{
+          fontFamily: F.body, fontSize: '0.9rem', color: C.textSec,
+          lineHeight: 1.7, paddingBottom: 18,
+        }}>{answer}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
    SECTION WRAPPER
    ═══════════════════════════════════════════ */
 function Section({ id, children, style }) {
@@ -734,7 +774,27 @@ export default function App() {
       </section>
 
       {/* ══════════════════════════════════════
-         9. FOOTER
+         9. FAQ
+         ══════════════════════════════════════ */}
+      <Section id="faq">
+        <SectionTitle
+          tag="FAQ"
+          title="Frequently Asked Questions"
+        />
+        <div style={{ maxWidth: 680, margin: '0 auto' }}>
+          <FaqItem
+            question="How do I subscribe to Celestial Cycles?"
+            answer="Celestial Cycles runs on your Wyckoff Labs account — the same account used for TradeOS, our professional trading journal. If you don't have one yet, creating it is free and takes 30 seconds. Once you're logged in, click any locked feature on the chart and you'll be taken directly to Stripe checkout to activate your plan."
+          />
+          <FaqItem
+            question="Do I need a TradeOS subscription too?"
+            answer="No. A Wyckoff Labs account is free. Celestial Cycles and TradeOS are separate subscriptions — you only pay for what you want. That said, TradeOS Elite subscribers get full Celestial Cycles Elite access included at no extra charge."
+          />
+        </div>
+      </Section>
+
+      {/* ══════════════════════════════════════
+         10. FOOTER
          ══════════════════════════════════════ */}
       <footer style={{
         borderTop: `1px solid ${C.border}`, padding: '32px 24px',
