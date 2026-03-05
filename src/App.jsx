@@ -34,7 +34,6 @@ const F = {
 };
 
 const APP_URL = 'https://cycles.wyckofflabs.com';
-const LAUNCH_DATE = new Date('2026-04-01T00:00:00Z');
 
 /* ═══════════════════════════════════════════
    FONT INJECTOR
@@ -51,43 +50,6 @@ function FontInjector() {
   return null;
 }
 
-/* ═══════════════════════════════════════════
-   COUNTDOWN TIMER
-   ═══════════════════════════════════════════ */
-function Countdown() {
-  const [now, setNow] = useState(Date.now());
-  useEffect(() => {
-    const id = setInterval(() => setNow(Date.now()), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  const diff = Math.max(0, LAUNCH_DATE - now);
-  const d = Math.floor(diff / 86400000);
-  const h = Math.floor((diff % 86400000) / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
-
-  const unit = (val, label) => (
-    <div style={{ textAlign: 'center' }}>
-      <div style={{
-        fontFamily: F.mono, fontSize: '2rem', fontWeight: 700,
-        color: C.gold, lineHeight: 1,
-      }}>{String(val).padStart(2, '0')}</div>
-      <div style={{
-        fontFamily: F.body, fontSize: '0.7rem', color: C.textSec,
-        textTransform: 'uppercase', letterSpacing: '0.08em', marginTop: 4,
-      }}>{label}</div>
-    </div>
-  );
-
-  const sep = <span style={{ fontFamily: F.mono, fontSize: '1.5rem', color: C.textMuted, alignSelf: 'flex-start', marginTop: 2 }}>:</span>;
-
-  return (
-    <div style={{ display: 'flex', gap: 12, alignItems: 'center', justifyContent: 'center' }}>
-      {unit(d, 'Days')}{sep}{unit(h, 'Hours')}{sep}{unit(m, 'Min')}{sep}{unit(s, 'Sec')}
-    </div>
-  );
-}
 
 /* ═══════════════════════════════════════════
    MINI CHART (seeded deterministic SVG)
@@ -775,29 +737,21 @@ function LandingPage() {
       </Section>
 
       {/* ══════════════════════════════════════
-         2. CONVERGENCE (countdown)
+         2. CONVERGENCE CALLOUT
          ══════════════════════════════════════ */}
-      <section style={{
-        background: `linear-gradient(180deg, ${C.bg} 0%, ${C.bgPanel} 50%, ${C.bg} 100%)`,
-        padding: '60px 24px',
-      }}>
-        <div style={{ maxWidth: 600, margin: '0 auto', textAlign: 'center' }}>
-          <div style={{
-            fontFamily: F.mono, fontSize: '0.7rem', color: C.orange,
-            textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 10,
-          }}>2026 Convergence Event</div>
-          <h2 style={{
-            fontFamily: F.display, fontSize: 'clamp(1.4rem, 3.5vw, 2rem)',
-            fontWeight: 800, color: C.text, marginBottom: 8, lineHeight: 1.2,
-          }}>Six Frameworks. One Window.</h2>
-          <p style={{
-            fontFamily: F.body, fontSize: '0.9rem', color: C.textSec, marginBottom: 28, lineHeight: 1.6,
-          }}>
-            Hurst trough, Benner panic year, Saturn-Pluto square, lunar node shift, eclipse cluster,
-            and Gann anniversary &mdash; all converge in early 2026. The countdown is live.
-          </p>
-          <Countdown />
+      <section style={{ textAlign: 'center', padding: '80px 24px', maxWidth: 700, margin: '0 auto' }}>
+        <div style={{ fontFamily: F.mono, fontSize: '0.75rem', letterSpacing: '0.15em', color: C.accent, textTransform: 'uppercase', marginBottom: 16 }}>
+          2026 Convergence Event
         </div>
+        <h2 style={{ fontFamily: F.display, fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 800, color: C.text, marginBottom: 20, lineHeight: 1.15 }}>
+          Six Major Cycles.<br />Aligning Simultaneously.
+        </h2>
+        <p style={{ fontFamily: F.body, color: C.textSec, fontSize: '1.1rem', lineHeight: 1.7, marginBottom: 36 }}>
+          Hurst trough, Benner panic year, Saturn{'\u2013'}Pluto square, lunar node shift, eclipse cluster, and Gann anniversary {'\u2014'} all converging in early 2026. Are you positioned?
+        </p>
+        <a href={APP_URL} target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', background: C.accent, color: '#000', fontFamily: F.body, fontWeight: 700, padding: '14px 32px', borderRadius: 8, fontSize: '1rem', textDecoration: 'none' }}>
+          Open Free Chart
+        </a>
       </section>
 
       {/* ══════════════════════════════════════
