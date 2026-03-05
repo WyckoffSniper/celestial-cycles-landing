@@ -457,7 +457,7 @@ export default function App() {
 
           {/* Desktop links */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 28 }} className="nav-desktop">
-            {['Features', 'Compare', 'Pricing'].map(l => (
+            {['Features', 'Compare', 'Pricing', 'FAQ'].map(l => (
               <a key={l} href={`#${l.toLowerCase()}`} style={{
                 fontFamily: F.body, fontSize: '0.85rem', color: C.textSec,
                 textDecoration: 'none', transition: 'color 0.2s',
@@ -492,7 +492,7 @@ export default function App() {
             background: C.bgPanel, borderTop: `1px solid ${C.border}`,
             padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 16,
           }} className="nav-mobile-menu">
-            {['Features', 'Compare', 'Pricing'].map(l => (
+            {['Features', 'Compare', 'Pricing', 'FAQ'].map(l => (
               <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMobileNav(false)} style={{
                 fontFamily: F.body, fontSize: '1rem', color: C.text, textDecoration: 'none',
               }}>{l}</a>
@@ -562,7 +562,11 @@ export default function App() {
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <HeroChartCard />
+          <img
+            src="/hero-chart.png"
+            alt="Celestial Cycles live chart with moon phases, Hurst arcs, and Mercury Rx overlays"
+            style={{ width: '100%', borderRadius: '8px', display: 'block' }}
+          />
         </div>
 
         <div style={{
@@ -706,7 +710,7 @@ export default function App() {
           />
           <PricingCard
             name="Pro"
-            price="$19"
+            price="$9.95"
             period="mo"
             accent={C.accent}
             popular
@@ -724,7 +728,7 @@ export default function App() {
           />
           <PricingCard
             name="Elite"
-            price="$39"
+            price="$19.95"
             period="mo"
             accent={C.gold}
             features={[
