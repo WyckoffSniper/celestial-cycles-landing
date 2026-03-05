@@ -254,7 +254,7 @@ function PricingCard({ name, price, period, features, accent, popular, ctaLabel,
 /* ═══════════════════════════════════════════
    FEATURE CARD
    ═══════════════════════════════════════════ */
-function FeatureCard({ icon, title, desc, color }) {
+function FeatureCard({ icon, title, desc, color, image, onImageClick }) {
   return (
     <div style={{
       background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`,
@@ -267,6 +267,21 @@ function FeatureCard({ icon, title, desc, color }) {
       <div style={{ fontSize: '1.8rem', marginBottom: 12 }}>{icon}</div>
       <div style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 700, color: C.text, marginBottom: 8 }}>{title}</div>
       <div style={{ fontFamily: F.body, fontSize: '0.85rem', color: C.textSec, lineHeight: 1.6 }}>{desc}</div>
+      {image && (
+        <div
+          onClick={() => onImageClick && onImageClick(image, title)}
+          style={{ marginTop: 16, cursor: 'pointer', position: 'relative' }}
+        >
+          <img src={image} alt={title} style={{
+            width: '100%', height: 140, objectFit: 'cover', borderRadius: 6, display: 'block',
+          }} />
+          <div style={{
+            position: 'absolute', bottom: 6, right: 6,
+            fontFamily: F.mono, fontSize: '0.6rem', color: C.textSec,
+            background: 'rgba(10,12,20,0.7)', borderRadius: 4, padding: '2px 6px',
+          }}>{'\uD83D\uDD0D'} click to expand</div>
+        </div>
+      )}
     </div>
   );
 }
@@ -307,6 +322,43 @@ function FaqItem({ question, answer }) {
           lineHeight: 1.7, paddingBottom: 18,
         }}>{answer}</p>
       </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════
+   LIGHTBOX
+   ═══════════════════════════════════════════ */
+function Lightbox({ src, alt, onClose }) {
+  useEffect(() => {
+    const handleKey = (e) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', handleKey);
+    return () => window.removeEventListener('keydown', handleKey);
+  }, [onClose]);
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed', inset: 0, zIndex: 9999,
+        background: 'rgba(0,0,0,0.92)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        animation: 'lbFadeIn 0.2s ease',
+      }}
+    >
+      <style>{`
+        @keyframes lbFadeIn { from { opacity: 0; } to { opacity: 1; } }
+      `}</style>
+      <button onClick={onClose} style={{
+        position: 'absolute', top: 16, right: 24,
+        background: 'none', border: 'none', color: '#fff',
+        fontSize: '2rem', cursor: 'pointer', lineHeight: 1,
+      }}>{'\u00D7'}</button>
+      <img
+        src={src} alt={alt || ''}
+        onClick={e => e.stopPropagation()}
+        style={{ maxWidth: '90vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: 8 }}
+      />
     </div>
   );
 }
@@ -428,10 +480,13 @@ function StepCard({ number, title, desc }) {
    ═══════════════════════════════════════════ */
 export default function App() {
   const [mobileNav, setMobileNav] = useState(false);
+  const [lightbox, setLightbox] = useState(null);
+  const openLightbox = (src, alt) => setLightbox({ src, alt });
 
   return (
     <div style={{ fontFamily: F.body, color: C.text, background: C.bg, minHeight: '100vh', overflowX: 'hidden' }}>
       <FontInjector />
+      {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
       {/* ── NAV ── */}
       <nav style={{
@@ -627,15 +682,60 @@ export default function App() {
           subtitle="Toggle between 16 independent overlay layers. Each one adds a timing dimension that traditional charting misses."
         />
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, justifyContent: 'center' }}>
-          <FeatureCard icon={'\uD83C\uDF11'} title="Moon Phases" desc="New & full moon markers with supermoon highlighting. See lunar rhythm on every timeframe." color={C.gold} />
-          <FeatureCard icon={'\u267B\uFE0F'} title="Mercury & Venus Rx" desc="Retrograde zones with pre/post shadow periods. Historically correlated with volatility spikes." color={C.pink} />
-          <FeatureCard icon={'\uD83C\uDF1E'} title="Eclipse Windows" desc="Solar and lunar eclipse markers with glow effects. Major cycle turning points for crypto." color={C.orange} />
-          <FeatureCard icon={'\uD83D\uDD04'} title="Hurst Cycle Arcs" desc="Three nested cycle periods (15/30/60 bar) with translation labels. See cycle troughs before they hit." color={C.textSec} />
+          <FeatureCard icon={'\uD83C\uDF11'} title="Moon Phases" desc="New & full moon markers with supermoon highlighting. See lunar rhythm on every timeframe." color={C.gold} image="/feature-moon.png" onImageClick={openLightbox} />
+          <FeatureCard icon={'\u267B\uFE0F'} title="Mercury & Venus Rx" desc="Retrograde zones with pre/post shadow periods. Historically correlated with volatility spikes." color={C.pink} image="/feature-mercury.png" onImageClick={openLightbox} />
+          <FeatureCard icon={'\uD83C\uDF1E'} title="Eclipse Windows" desc="Solar and lunar eclipse markers with glow effects. Major cycle turning points for crypto." color={C.orange} image="/feature-eclipse.png" onImageClick={openLightbox} />
+          <FeatureCard icon={'\uD83D\uDD04'} title="Hurst Cycle Arcs" desc="Three nested cycle periods (15/30/60 bar) with translation labels. See cycle troughs before they hit." color={C.textSec} image="/feature-hurst.png" onImageClick={openLightbox} />
           <FeatureCard icon={'\u23F1\uFE0F'} title="Gann Countdown" desc="Custom anchor dates with T+7 through T+360 markers. Anniversary clusters and confluence zones." color={C.orange} />
-          <FeatureCard icon={'\uD83D\uDCC8'} title="Benner Cycle" desc="Phase ribbons and background bands. Classifies years as good, hard, or panic since 1875." color={C.teal} />
-          <FeatureCard icon={'\uD83C\uDF10'} title="Lunar Node Ribbon" desc="18.6-year nodal cycle with zodiac position, ingress markers, and McWhirter labels." color={C.purple} />
-          <FeatureCard icon={'\u2643'} title="Planetary Conjunctions" desc="Jupiter-Saturn and Saturn-Pluto hard aspects. The longest-cycle timing framework in the toolkit." color={C.blue} />
-          <FeatureCard icon={'\u2605'} title="Cosmic Confluence Score" desc="Real-time 0-10 score combining all active layers. Heat strip visualization shows density at a glance." color={C.accent} />
+          <FeatureCard icon={'\uD83D\uDCC8'} title="Benner Cycle" desc="Phase ribbons and background bands. Classifies years as good, hard, or panic since 1875." color={C.teal} image="/feature-benner.png" onImageClick={openLightbox} />
+          <FeatureCard icon={'\uD83C\uDF10'} title="Lunar Node Ribbon" desc="18.6-year nodal cycle with zodiac position, ingress markers, and McWhirter labels." color={C.purple} image="/feature-lunar-node.png" onImageClick={openLightbox} />
+          <FeatureCard icon={'\u2643'} title="Planetary Conjunctions" desc="Jupiter-Saturn and Saturn-Pluto hard aspects. The longest-cycle timing framework in the toolkit." color={C.blue} image="/feature-conjunctions.png" onImageClick={openLightbox} />
+          <FeatureCard icon={'\u2605'} title="Cosmic Confluence Score" desc="Real-time 0-10 score combining all active layers. Heat strip visualization shows density at a glance." color={C.accent} image="/feature-cosmic-score.png" onImageClick={openLightbox} />
+        </div>
+      </Section>
+
+      {/* ══════════════════════════════════════
+         4b. COSMIC SCORE PROOF
+         ══════════════════════════════════════ */}
+      <Section id="proof" style={{ paddingTop: 40, paddingBottom: 40 }}>
+        <div style={{
+          background: C.bgCard, borderRadius: 16,
+          border: `1px solid ${C.gold}33`,
+          boxShadow: `0 0 40px ${C.gold}11, 0 8px 32px rgba(0,0,0,0.4)`,
+          padding: '40px 32px', position: 'relative', overflow: 'hidden',
+        }}>
+          <div style={{
+            position: 'absolute', top: 16, left: 16,
+            background: `linear-gradient(135deg, ${C.gold}, ${C.orange})`,
+            borderRadius: 6, padding: '4px 12px',
+            fontFamily: F.mono, fontSize: '0.65rem', fontWeight: 600, color: C.bg,
+            letterSpacing: '0.08em', textTransform: 'uppercase',
+          }}>LIVE CASE STUDY</div>
+          <div style={{ textAlign: 'center', marginTop: 16 }}>
+            <h2 style={{
+              fontFamily: F.display, fontSize: 'clamp(1.8rem, 5vw, 2.8rem)',
+              fontWeight: 800, color: C.gold, lineHeight: 1.15, marginBottom: 8,
+            }}>10.0 Cosmic Score.</h2>
+            <p style={{
+              fontFamily: F.display, fontSize: 'clamp(1.1rem, 3vw, 1.6rem)',
+              fontWeight: 600, color: C.text, marginBottom: 16,
+            }}>Two weeks later, historic crash.</p>
+            <p style={{
+              fontFamily: F.body, fontSize: '0.9rem', color: C.textSec,
+              maxWidth: 600, margin: '0 auto 28px', lineHeight: 1.7,
+            }}>
+              September 21, 2025. Every cycle framework aligned simultaneously.
+              The score hit maximum. BTC dropped 45% in the weeks that followed.
+            </p>
+          </div>
+          <img
+            src="/cosmic-score-proof.png"
+            alt="Cosmic Confluence Score hitting 10.0 before the September 2025 BTC crash"
+            onClick={() => openLightbox('/cosmic-score-proof.png', 'Cosmic Score 10.0 — September 2025')}
+            style={{
+              width: '100%', borderRadius: 8, display: 'block', cursor: 'pointer',
+            }}
+          />
         </div>
       </Section>
 
