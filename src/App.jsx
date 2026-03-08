@@ -920,7 +920,7 @@ function LandingPage() {
               'Cosmic confluence score',
             ]}
             ctaLabel="Upgrade to Pro"
-            ctaHref={APP_URL}
+            ctaHref={`${APP_URL}?upgrade=pro`}
           />
           <PricingCard
             name="Elite"
@@ -937,7 +937,7 @@ function LandingPage() {
               'Priority support',
             ]}
             ctaLabel="Go Elite"
-            ctaHref={APP_URL}
+            ctaHref={`${APP_URL}?upgrade=elite`}
           />
         </div>
       </Section>
