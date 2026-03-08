@@ -33,7 +33,7 @@ const F = {
   mono:    "'DM Mono', monospace",
 };
 
-const APP_URL = 'https://cycles.wyckofflabs.com';
+const APP_URL = 'https://app.cosmiccharts.com';
 
 /* ═══════════════════════════════════════════
    FONT INJECTOR
@@ -384,7 +384,7 @@ function ComparisonTable() {
         <thead>
           <tr>
             <th style={{ textAlign: 'left', padding: '12px 16px', color: C.textSec, borderBottom: `1px solid ${C.border}`, fontWeight: 500 }}>Feature</th>
-            <th style={{ textAlign: 'center', padding: '12px 16px', color: C.gold, borderBottom: `1px solid ${C.border}`, fontWeight: 600, fontFamily: F.display }}>Celestial Cycles</th>
+            <th style={{ textAlign: 'center', padding: '12px 16px', color: C.gold, borderBottom: `1px solid ${C.border}`, fontWeight: 600, fontFamily: F.display }}>Cosmic Charts</th>
             <th style={{ textAlign: 'center', padding: '12px 16px', color: C.textSec, borderBottom: `1px solid ${C.border}`, fontWeight: 500 }}>TradingView</th>
           </tr>
         </thead>
@@ -479,7 +479,7 @@ function PrivacyPolicy() {
               background: `linear-gradient(135deg, ${C.accent}, ${C.purple})`,
               display: 'inline-block',
             }} />
-            Celestial Cycles
+            Cosmic Charts
           </Link>
           <a href={APP_URL} style={{
             fontFamily: F.body, fontSize: '0.85rem', fontWeight: 600, color: C.accent,
@@ -504,8 +504,8 @@ function PrivacyPolicy() {
 
         <h3 style={h3Style}>1. Introduction</h3>
         <p style={pStyle}>
-          Celestial Cycles is operated by Wyckoff Labs. This policy explains how we collect,
-          use, and protect your information when you use our service at cycles.wyckofflabs.com.
+          Cosmic Charts is operated by Wyckoff Labs. This policy explains how we collect,
+          use, and protect your information when you use our service at app.cosmiccharts.com.
         </p>
 
         <h3 style={h3Style}>2. Information We Collect</h3>
@@ -522,7 +522,7 @@ function PrivacyPolicy() {
 
         <h3 style={h3Style}>3. How We Use Your Information</h3>
         <p style={pStyle}>
-          We use the information we collect to provide and maintain the Celestial Cycles service,
+          We use the information we collect to provide and maintain the Cosmic Charts service,
           send account-related emails (password resets, subscription confirmations), and process
           payments through Stripe.
         </p>
@@ -611,7 +611,7 @@ function LandingPage() {
               background: `linear-gradient(135deg, ${C.accent}, ${C.purple})`,
               display: 'inline-block',
             }} />
-            Celestial Cycles
+            Cosmic Charts
           </a>
 
           {/* Desktop links */}
@@ -723,7 +723,7 @@ function LandingPage() {
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <img
             src="/hero-chart.png"
-            alt="Celestial Cycles live chart with moon phases, Hurst arcs, and Mercury Rx overlays"
+            alt="Cosmic Charts live chart with moon phases, Hurst arcs, and Mercury Rx overlays"
             style={{ width: '100%', borderRadius: '8px', display: 'block' }}
           />
         </div>
@@ -761,7 +761,7 @@ function LandingPage() {
         <SectionTitle
           tag="How We Compare"
           title="TradingView Shows Price. We Show Timing."
-          subtitle="Standard charting platforms give you lagging indicators. Celestial Cycles gives you the timing frameworks that move ahead of price."
+          subtitle="Standard charting platforms give you lagging indicators. Cosmic Charts gives you the timing frameworks that move ahead of price."
         />
         <div style={{ background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, padding: '4px 0', overflow: 'hidden' }}>
           <ComparisonTable />
@@ -846,7 +846,7 @@ function LandingPage() {
           />
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, justifyContent: 'center' }}>
             <TestimonialCard
-              quote="I used to spend hours plotting moon phases manually on TradingView. Celestial Cycles does it instantly across every timeframe."
+              quote="I used to spend hours plotting moon phases manually on TradingView. Cosmic Charts does it instantly across every timeframe."
               name="Alex K."
               role="Crypto Swing Trader"
             />
@@ -970,7 +970,7 @@ function LandingPage() {
         }}
         onMouseEnter={e => { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = `0 6px 32px ${C.accent}66`; }}
         onMouseLeave={e => { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = `0 4px 24px ${C.accent}44`; }}
-        >Launch Celestial Cycles</a>
+        >Launch Cosmic Charts</a>
       </section>
 
       {/* ══════════════════════════════════════
@@ -983,12 +983,12 @@ function LandingPage() {
         />
         <div style={{ maxWidth: 680, margin: '0 auto' }}>
           <FaqItem
-            question="How do I subscribe to Celestial Cycles?"
-            answer="Celestial Cycles runs on your Wyckoff Labs account — the same account used for TradeOS, our professional trading journal. If you don't have one yet, creating it is free and takes 30 seconds. Once you're logged in, click any locked feature on the chart and you'll be taken directly to Stripe checkout to activate your plan."
+            question="How do I subscribe to Cosmic Charts?"
+            answer="Cosmic Charts runs on your Wyckoff Labs account — the same account used for TradeOS, our professional trading journal. If you don't have one yet, creating it is free and takes 30 seconds. Once you're logged in, click any locked feature on the chart and you'll be taken directly to Stripe checkout to activate your plan."
           />
           <FaqItem
             question="Do I need a TradeOS subscription too?"
-            answer="No. A Wyckoff Labs account is free. Celestial Cycles and TradeOS are separate subscriptions — you only pay for what you want. That said, TradeOS Elite subscribers get full Celestial Cycles Elite access included at no extra charge."
+            answer="No. A Wyckoff Labs account is free. Cosmic Charts and TradeOS are separate subscriptions — you only pay for what you want. That said, TradeOS Elite subscribers get full Cosmic Charts Elite access included at no extra charge."
           />
         </div>
       </Section>
