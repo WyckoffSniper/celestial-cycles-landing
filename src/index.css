@@ -1,4 +1,162 @@
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { background: #0a0c14; }
-button { font-family: inherit; }
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS
+   ═══════════════════════════════════════════ */
+:root {
+  /* ── Backgrounds ── */
+  --bg: #08080d;
+  --bg-raised: #0e0e16;
+  --bg-card: rgba(16, 16, 24, 0.72);
+  --bg-card-hover: rgba(22, 22, 32, 0.82);
+
+  /* ── Borders ── */
+  --border: rgba(255, 255, 255, 0.06);
+  --border-hover: rgba(255, 255, 255, 0.12);
+  --border-gold: rgba(196, 151, 70, 0.3);
+
+  /* ── Text ── */
+  --text-primary: #f0eee6;
+  --text-secondary: rgba(240, 238, 230, 0.55);
+  --text-tertiary: rgba(240, 238, 230, 0.3);
+
+  /* ── Accents ── */
+  --gold: #c49746;
+  --gold-light: #feeaa5;
+  --gold-dim: rgba(196, 151, 70, 0.15);
+  --purple: #8b7ec8;
+  --purple-dim: rgba(139, 126, 200, 0.12);
+
+  /* ── Semantic ── */
+  --success: #4ade80;
+  --danger: #f87171;
+
+  /* ── Typography ── */
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* ── Easings ── */
+  --ease-spring: cubic-bezier(0.34, 1.2, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ── Durations ── */
+  --duration-fast: 200ms;
+  --duration-med: 400ms;
+  --duration-slow: 600ms;
+
+  /* ── Surfaces ── */
+  --glass-blur: blur(40px) saturate(1.6);
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 20px;
+  --radius-xl: 24px;
+}
+
+/* ═══════════════════════════════════════════
+   GLOBAL BASE STYLES
+   ═══════════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: rgba(196, 151, 70, 0.3);
+  color: var(--gold-light);
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 3px;
+}
+
+/* ═══════════════════════════════════════════
+   KEYFRAME ANIMATIONS
+   ═══════════════════════════════════════════ */
+@keyframes spinRing {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to   { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes grainMove {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-5%, -10%); }
+  20% { transform: translate(-15%, 5%); }
+  30% { transform: translate(7%, -25%); }
+  40% { transform: translate(-5%, 25%); }
+  50% { transform: translate(-15%, 10%); }
+  60% { transform: translate(15%, 0%); }
+  70% { transform: translate(0%, 15%); }
+  80% { transform: translate(3%, 25%); }
+  90% { transform: translate(-10%, 10%); }
+}
+
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+   ═══════════════════════════════════════════ */
+.nav-mobile-btn { display: none !important; }
+
+@media (max-width: 768px) {
+  .nav-desktop { display: none !important; }
+  .nav-mobile-btn { display: flex !important; }
+}
+
+/* ═══════════════════════════════════════════
+   HERO ENTRY ANIMATIONS
+   ═══════════════════════════════════════════ */
+.hero-anim {
+  opacity: 0;
+  animation: fadeSlideIn 0.7s var(--ease-smooth) forwards;
+}
+.hero-anim-0 { animation-delay: 0ms; }
+.hero-anim-1 { animation-delay: 80ms; }
+.hero-anim-2 { animation-delay: 160ms; }
+.hero-anim-3 { animation-delay: 240ms; }
+.hero-anim-4 { animation-delay: 400ms; animation-duration: 0.9s; }
+.hero-anim-5 { animation-delay: 500ms; }
+
+/* ═══════════════════════════════════════════
+   MOBILE MENU ANIMATION
+   ═══════════════════════════════════════════ */
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

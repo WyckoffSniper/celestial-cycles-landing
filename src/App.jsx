@@ -36,18 +36,28 @@ const F = {
 const APP_URL = 'https://app.cosmiccharts.com';
 
 /* ═══════════════════════════════════════════
-   FONT INJECTOR
+   FILM GRAIN OVERLAY
    ═══════════════════════════════════════════ */
-function FontInjector() {
-  useEffect(() => {
-    if (document.getElementById('cc-fonts')) return;
-    const link = document.createElement('link');
-    link.id = 'cc-fonts';
-    link.rel = 'stylesheet';
-    link.href = 'https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap';
-    document.head.appendChild(link);
-  }, []);
-  return null;
+function FilmGrain() {
+  return (
+    <div
+      aria-hidden="true"
+      style={{
+        position: 'fixed',
+        top: '-50%',
+        left: '-50%',
+        width: '200%',
+        height: '200%',
+        backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+        backgroundSize: '128px 128px',
+        opacity: 0.03,
+        pointerEvents: 'none',
+        animation: 'grainMove 0.5s steps(6) infinite',
+        zIndex: 9999,
+        mixBlendMode: 'screen',
+      }}
+    />
+  );
 }
 
 
@@ -458,7 +468,6 @@ function PrivacyPolicy() {
 
   return (
     <div style={{ fontFamily: F.body, color: C.text, background: C.bg, minHeight: '100vh' }}>
-      <FontInjector />
 
       {/* Nav */}
       <nav style={{
@@ -572,10 +581,13 @@ function PrivacyPolicy() {
    ═══════════════════════════════════════════ */
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/privacy" element={<PrivacyPolicy />} />
-    </Routes>
+    <>
+      <FilmGrain />
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/privacy" element={<PrivacyPolicy />} />
+      </Routes>
+    </>
   );
 }
 
@@ -588,153 +600,206 @@ function LandingPage() {
   const openLightbox = (src, alt) => setLightbox({ src, alt });
 
   return (
-    <div style={{ fontFamily: F.body, color: C.text, background: C.bg, minHeight: '100vh', overflowX: 'hidden' }}>
-      <FontInjector />
+    <div style={{ fontFamily: F.body, color: C.text, background: 'var(--bg)', minHeight: '100vh', overflowX: 'hidden' }}>
       {lightbox && <Lightbox src={lightbox.src} alt={lightbox.alt} onClose={() => setLightbox(null)} />}
 
       {/* ── NAV ── */}
       <nav style={{
-        position: 'fixed', top: 0, left: 0, right: 0, zIndex: 100,
-        background: 'rgba(10,12,20,0.85)', backdropFilter: 'blur(12px)',
-        borderBottom: `1px solid ${C.border}`,
+        position: 'sticky', top: 16, zIndex: 100,
+        maxWidth: 'fit-content', margin: '0 auto',
+        background: 'var(--bg-card)', backdropFilter: 'var(--glass-blur)',
+        border: '1px solid var(--border)',
+        borderRadius: 'var(--radius-lg)',
+        padding: '8px 8px 8px 20px',
+        boxShadow: '0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+        display: 'flex', alignItems: 'center', gap: 8,
       }}>
-        <div style={{
-          maxWidth: 1100, margin: '0 auto', padding: '0 24px',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: 56,
+        <a href="#" style={{
+          fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700,
+          letterSpacing: '-0.02em', color: 'var(--text-primary)',
+          textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8,
+          marginRight: 8, whiteSpace: 'nowrap',
         }}>
-          <a href="#" style={{
-            fontFamily: F.display, fontSize: '1.1rem', fontWeight: 800, color: C.text,
-            textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8,
-          }}>
-            <span style={{
-              width: 10, height: 10, borderRadius: '50%',
-              background: `linear-gradient(135deg, ${C.accent}, ${C.purple})`,
-              display: 'inline-block',
-            }} />
-            Cosmic Charts
-          </a>
+          <span style={{
+            width: 8, height: 8, borderRadius: '50%',
+            background: 'var(--gold)',
+            boxShadow: '0 0 12px rgba(196,151,70,0.4)',
+            display: 'inline-block', flexShrink: 0,
+          }} />
+          Cosmic Charts
+        </a>
 
-          {/* Desktop links */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 28 }} className="nav-desktop">
-            {['Features', 'Compare', 'Pricing', 'FAQ'].map(l => (
-              <a key={l} href={`#${l.toLowerCase()}`} style={{
-                fontFamily: F.body, fontSize: '0.85rem', color: C.textSec,
-                textDecoration: 'none', transition: 'color 0.2s',
-              }}
-              onMouseEnter={e => e.target.style.color = C.text}
-              onMouseLeave={e => e.target.style.color = C.textSec}
-              >{l}</a>
-            ))}
-            <a href={APP_URL} style={{
-              fontFamily: F.body, fontSize: '0.85rem', fontWeight: 600, color: C.accent,
-              textDecoration: 'none', border: `1px solid ${C.accent}`, borderRadius: 6,
-              padding: '6px 16px', transition: 'all 0.2s',
-            }}>Launch App</a>
-          </div>
-
-          {/* Mobile hamburger */}
-          <button
-            onClick={() => setMobileNav(v => !v)}
-            style={{
-              display: 'none', background: 'none', border: 'none', color: C.text,
-              fontSize: '1.4rem', cursor: 'pointer', padding: 4,
+        {/* Desktop links */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="nav-desktop">
+          {['Features', 'Compare', 'Pricing', 'FAQ'].map(l => (
+            <a key={l} href={`#${l.toLowerCase()}`} style={{
+              fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 500,
+              color: 'var(--text-tertiary)', textDecoration: 'none',
+              padding: '8px 16px', borderRadius: 'var(--radius-sm)',
+              transition: 'color var(--duration-fast) ease, background var(--duration-fast) ease',
             }}
-            className="nav-mobile-btn"
-          >
-            {mobileNav ? '\u2715' : '\u2630'}
-          </button>
+            onMouseEnter={e => { e.target.style.color = 'var(--text-primary)'; e.target.style.background = 'rgba(255,255,255,0.04)'; }}
+            onMouseLeave={e => { e.target.style.color = 'var(--text-tertiary)'; e.target.style.background = 'transparent'; }}
+            >{l}</a>
+          ))}
+          <a href={APP_URL} style={{
+            fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 600,
+            color: '#0a0a0f', textDecoration: 'none',
+            background: 'var(--gold)', borderRadius: 'var(--radius-sm)',
+            padding: '8px 20px', marginLeft: 4,
+            boxShadow: '0 2px 8px rgba(196,151,70,0.15), inset 0 1px 0 rgba(255,255,255,0.15)',
+            transition: 'background var(--duration-fast) ease, transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease',
+            display: 'inline-flex', alignItems: 'center', gap: 6,
+          }}
+          onMouseEnter={e => { e.target.style.background = '#d4a44e'; e.target.style.transform = 'translateY(-1px)'; e.target.style.boxShadow = '0 4px 16px rgba(196,151,70,0.25)'; }}
+          onMouseLeave={e => { e.target.style.background = 'var(--gold)'; e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = '0 2px 8px rgba(196,151,70,0.15), inset 0 1px 0 rgba(255,255,255,0.15)'; }}
+          >Launch App {'\u2192'}</a>
         </div>
 
-        {/* Mobile menu */}
-        {mobileNav && (
-          <div style={{
-            background: C.bgPanel, borderTop: `1px solid ${C.border}`,
-            padding: '16px 24px', display: 'flex', flexDirection: 'column', gap: 16,
-          }} className="nav-mobile-menu">
-            {['Features', 'Compare', 'Pricing', 'FAQ'].map(l => (
-              <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMobileNav(false)} style={{
-                fontFamily: F.body, fontSize: '1rem', color: C.text, textDecoration: 'none',
-              }}>{l}</a>
-            ))}
-            <a href={APP_URL} onClick={() => setMobileNav(false)} style={{
-              fontFamily: F.body, fontSize: '1rem', fontWeight: 600, color: C.accent, textDecoration: 'none',
-            }}>Launch App &rarr;</a>
-          </div>
-        )}
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMobileNav(v => !v)}
+          className="nav-mobile-btn"
+          style={{
+            background: 'none', border: 'none', color: 'var(--text-secondary)',
+            cursor: 'pointer', padding: 8,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}
+          aria-label="Toggle menu"
+        >
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            {mobileNav ? (
+              <><line x1="4" y1="4" x2="16" y2="16" /><line x1="16" y1="4" x2="4" y2="16" /></>
+            ) : (
+              <><line x1="3" y1="5" x2="17" y2="5" /><line x1="3" y1="10" x2="17" y2="10" /><line x1="3" y1="15" x2="17" y2="15" /></>
+            )}
+          </svg>
+        </button>
       </nav>
 
-      {/* ── RESPONSIVE STYLES ── */}
-      <style>{`
-        .nav-mobile-btn { display: none !important; }
-        @media (max-width: 640px) {
-          .nav-desktop { display: none !important; }
-          .nav-mobile-btn { display: block !important; }
-        }
-      `}</style>
+      {/* Mobile menu */}
+      {mobileNav && (
+        <div style={{
+          position: 'fixed', top: 72, left: 16, right: 16, zIndex: 99,
+          background: 'var(--bg-card)', backdropFilter: 'var(--glass-blur)',
+          border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)',
+          padding: '20px 24px', display: 'flex', flexDirection: 'column', gap: 8,
+          boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
+          animation: 'slideDown 0.25s var(--ease-smooth) forwards',
+        }}>
+          {['Features', 'Compare', 'Pricing', 'FAQ'].map(l => (
+            <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMobileNav(false)} style={{
+              fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 500,
+              color: 'var(--text-secondary)', textDecoration: 'none',
+              padding: '10px 12px', borderRadius: 'var(--radius-sm)',
+              transition: 'color var(--duration-fast) ease, background var(--duration-fast) ease',
+            }}
+            onMouseEnter={e => { e.target.style.color = 'var(--text-primary)'; e.target.style.background = 'rgba(255,255,255,0.04)'; }}
+            onMouseLeave={e => { e.target.style.color = 'var(--text-secondary)'; e.target.style.background = 'transparent'; }}
+            >{l}</a>
+          ))}
+          <a href={APP_URL} onClick={() => setMobileNav(false)} style={{
+            fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 600,
+            color: '#0a0a0f', textDecoration: 'none', textAlign: 'center',
+            background: 'var(--gold)', borderRadius: 'var(--radius-sm)',
+            padding: '12px 20px', marginTop: 4,
+          }}>Launch App {'\u2192'}</a>
+        </div>
+      )}
 
       {/* ══════════════════════════════════════
          1. HERO
          ══════════════════════════════════════ */}
-      <Section id="hero" style={{ paddingTop: 120, textAlign: 'center' }}>
-        <div style={{
-          fontFamily: F.mono, fontSize: '0.7rem', color: C.accent,
-          textTransform: 'uppercase', letterSpacing: '0.15em', marginBottom: 16,
+      <section id="hero" style={{
+        minHeight: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'column',
+        alignItems: 'center', justifyContent: 'center',
+        textAlign: 'center', padding: '80px 24px 60px',
+        position: 'relative', overflow: 'hidden',
+      }}>
+        {/* Ambient glow */}
+        <div aria-hidden="true" style={{
+          position: 'absolute', top: '10%', left: '50%', transform: 'translateX(-50%)',
+          width: 800, height: 500,
+          background: 'radial-gradient(ellipse at center, rgba(196,151,70,0.04) 0%, transparent 60%)',
+          pointerEvents: 'none',
+        }} />
+
+        <div className="hero-anim hero-anim-0" style={{
+          fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500,
+          letterSpacing: '0.15em', textTransform: 'uppercase',
+          color: 'var(--gold)', marginBottom: 16,
         }}>Multi-Framework Cycle Analysis</div>
 
-        <h1 style={{
-          fontFamily: F.display, fontSize: 'clamp(2rem, 6vw, 3.4rem)',
-          fontWeight: 800, lineHeight: 1.15, marginBottom: 20,
-          background: `linear-gradient(135deg, ${C.text} 0%, ${C.gold} 50%, ${C.blue} 100%)`,
-          WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
+        <h1 className="hero-anim hero-anim-1" style={{
+          fontFamily: 'var(--font-display)', fontWeight: 800,
+          fontSize: 'clamp(36px, 6vw, 64px)', lineHeight: 1.05,
+          letterSpacing: '-0.03em', color: 'var(--text-primary)',
+          marginBottom: 20, maxWidth: 720,
         }}>
-          See What the Chart<br />Won't Show You
+          See What the Chart Won't Show You
         </h1>
 
-        <p style={{
-          fontFamily: F.body, fontSize: 'clamp(0.95rem, 2vw, 1.15rem)',
-          color: C.textSec, maxWidth: 540, margin: '0 auto 32px', lineHeight: 1.7,
+        <p className="hero-anim hero-anim-2" style={{
+          fontFamily: 'var(--font-body)', fontSize: 17, lineHeight: 1.6,
+          color: 'var(--text-secondary)', maxWidth: 560, margin: '0 auto 32px',
         }}>
           Moon phases, retrogrades, eclipses, Hurst arcs, Gann countdowns, planetary
           alignments &mdash; overlaid on live crypto charts. One tool, every cycle framework.
         </p>
 
-        <div style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap', marginBottom: 40 }}>
+        <div className="hero-anim hero-anim-3" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href={APP_URL} style={{
-            fontFamily: F.body, fontSize: '1rem', fontWeight: 600, color: C.white,
-            textDecoration: 'none',
-            background: `linear-gradient(135deg, ${C.accent}, ${C.purple})`,
-            borderRadius: 8, padding: '14px 32px',
-            boxShadow: `0 4px 20px ${C.accent}44`,
-            transition: 'transform 0.2s, box-shadow 0.2s',
+            fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 600,
+            color: '#0a0a0f', textDecoration: 'none',
+            background: 'var(--gold)', borderRadius: 'var(--radius-sm)',
+            padding: '14px 32px',
+            boxShadow: '0 4px 16px rgba(196,151,70,0.2), inset 0 1px 0 rgba(255,255,255,0.15)',
+            transition: 'background var(--duration-fast) ease, transform var(--duration-fast) ease, box-shadow var(--duration-fast) ease',
           }}
-          onMouseEnter={e => { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = `0 6px 28px ${C.accent}66`; }}
-          onMouseLeave={e => { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = `0 4px 20px ${C.accent}44`; }}
+          onMouseEnter={e => { e.target.style.background = '#d4a44e'; e.target.style.transform = 'translateY(-1px)'; e.target.style.boxShadow = '0 6px 24px rgba(196,151,70,0.3)'; }}
+          onMouseLeave={e => { e.target.style.background = 'var(--gold)'; e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = '0 4px 16px rgba(196,151,70,0.2), inset 0 1px 0 rgba(255,255,255,0.15)'; }}
           >Open Free Chart</a>
           <a href="#pricing" style={{
-            fontFamily: F.body, fontSize: '1rem', fontWeight: 600, color: C.accent,
-            textDecoration: 'none', border: `1px solid ${C.accent}`,
-            borderRadius: 8, padding: '14px 32px', transition: 'background 0.2s',
+            fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 500,
+            color: 'var(--text-secondary)', textDecoration: 'none',
+            background: 'transparent', border: '1px solid var(--border-hover)',
+            borderRadius: 'var(--radius-sm)', padding: '14px 28px',
+            transition: 'background var(--duration-fast) ease, color var(--duration-fast) ease, border-color var(--duration-fast) ease',
           }}
-          onMouseEnter={e => e.target.style.background = C.accent + '11'}
-          onMouseLeave={e => e.target.style.background = 'transparent'}
+          onMouseEnter={e => { e.target.style.background = 'rgba(255,255,255,0.04)'; e.target.style.color = 'var(--text-primary)'; e.target.style.borderColor = 'rgba(255,255,255,0.18)'; }}
+          onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--text-secondary)'; e.target.style.borderColor = 'var(--border-hover)'; }}
           >See Plans</a>
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <img
-            src="/hero-chart.png"
-            alt="Cosmic Charts live chart with moon phases, Hurst arcs, and Mercury Rx overlays"
-            style={{ width: '100%', borderRadius: '8px', display: 'block' }}
-          />
+        <div className="hero-anim hero-anim-4" style={{
+          maxWidth: 900, margin: '48px auto 0', position: 'relative',
+        }}>
+          <div style={{
+            borderRadius: 'var(--radius-xl)', border: '1px solid var(--border)',
+            boxShadow: '0 24px 64px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.03)',
+            overflow: 'hidden',
+          }}>
+            <img
+              src="/hero-chart.png"
+              alt="Cosmic Charts live chart with moon phases, Hurst arcs, and Mercury Rx overlays"
+              style={{ width: '100%', display: 'block' }}
+            />
+          </div>
+          {/* Gold glow beneath screenshot */}
+          <div aria-hidden="true" style={{
+            position: 'absolute', bottom: -100, left: '10%', width: '80%', height: 200,
+            background: 'radial-gradient(ellipse at center, rgba(196,151,70,0.06) 0%, transparent 70%)',
+            pointerEvents: 'none',
+          }} />
         </div>
 
-        <div style={{
-          marginTop: 32, fontFamily: F.mono, fontSize: '0.7rem', color: C.textMuted,
-          textTransform: 'uppercase', letterSpacing: '0.1em',
+        <div className="hero-anim hero-anim-5" style={{
+          marginTop: 24, fontSize: 11, letterSpacing: '0.12em',
+          textTransform: 'uppercase', color: 'var(--text-tertiary)',
         }}>
           Trusted by cycle traders worldwide &middot; No API keys required &middot; Loads in seconds
         </div>
-      </Section>
+      </section>
 
       {/* ══════════════════════════════════════
          2. CONVERGENCE CALLOUT
