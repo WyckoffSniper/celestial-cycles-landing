@@ -802,6 +802,84 @@ function LandingPage() {
       </section>
 
       {/* ══════════════════════════════════════
+         LIVE CASE STUDY
+         ══════════════════════════════════════ */}
+      <section className="case-study-section" style={{
+        padding: '120px 24px 80px', position: 'relative',
+      }}>
+        {/* Ambient glow behind card */}
+        <div aria-hidden="true" style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: '120%', maxWidth: 1152, height: 300,
+          background: 'radial-gradient(ellipse at center, rgba(196,151,70,0.05) 0%, transparent 65%)',
+          filter: 'blur(40px)', pointerEvents: 'none',
+        }} />
+
+        <div className="case-study-card" style={{
+          maxWidth: 960, margin: '0 auto', position: 'relative',
+          background: 'var(--bg-card)', backdropFilter: 'var(--glass-blur)',
+          WebkitBackdropFilter: 'var(--glass-blur)',
+          border: '1px solid var(--border)', borderRadius: 'var(--radius-xl)',
+          boxShadow: '0 16px 48px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+          padding: 48, overflow: 'hidden',
+          opacity: 0, animation: 'fadeSlideIn 0.7s var(--ease-smooth) 0.6s forwards',
+        }}>
+          {/* Badge */}
+          <div style={{
+            display: 'inline-block', padding: '5px 14px',
+            fontSize: 10, fontWeight: 700, fontFamily: F.body,
+            textTransform: 'uppercase', letterSpacing: '0.12em',
+            background: 'rgba(196,151,70,0.15)', color: 'var(--gold)',
+            border: '1px solid rgba(196,151,70,0.2)', borderRadius: 100,
+            marginBottom: 24,
+          }}>LIVE CASE STUDY</div>
+
+          {/* Score headline */}
+          <h2 style={{
+            fontFamily: F.display, fontWeight: 800,
+            fontSize: 'clamp(36px, 5vw, 56px)', lineHeight: 1.05,
+            letterSpacing: '-0.03em', color: 'var(--gold)',
+            marginBottom: 8,
+          }}>10.0 Cosmic Score.</h2>
+
+          {/* Subtitle */}
+          <p style={{
+            fontFamily: F.display, fontWeight: 700,
+            fontSize: 'clamp(20px, 3vw, 28px)', lineHeight: 1.2,
+            letterSpacing: '-0.02em', color: 'var(--text-primary)',
+            marginBottom: 16,
+          }}>Two weeks later, historic crash.</p>
+
+          {/* Description */}
+          <p style={{
+            fontFamily: F.body, fontSize: 15, lineHeight: 1.6,
+            color: 'var(--text-secondary)', maxWidth: 520,
+            marginBottom: 32,
+          }}>
+            September 21, 2025. Every cycle framework aligned simultaneously.
+            The score hit maximum. BTC dropped 45% in the weeks that followed.
+          </p>
+
+          {/* Chart screenshot */}
+          <div style={{ position: 'relative', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)', overflow: 'hidden', boxShadow: '0 8px 24px rgba(0,0,0,0.3)' }}>
+            <img
+              src="/cosmic-score-proof.png"
+              alt="Cosmic Confluence Score hitting 10.0 before the September 2025 BTC crash"
+              onClick={() => openLightbox('/cosmic-score-proof.png', 'Cosmic Score 10.0 — September 2025')}
+              style={{ width: '100%', display: 'block', cursor: 'pointer' }}
+            />
+            {/* Gold gradient fade at bottom */}
+            <div aria-hidden="true" style={{
+              position: 'absolute', bottom: 0, left: 0, right: 0, height: 60,
+              background: 'linear-gradient(to top, rgba(196,151,70,0.04) 0%, transparent 100%)',
+              pointerEvents: 'none',
+            }} />
+          </div>
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════
          2. CONVERGENCE CALLOUT
          ══════════════════════════════════════ */}
       <section style={{ textAlign: 'center', padding: '80px 24px', maxWidth: 700, margin: '0 auto' }}>
@@ -852,51 +930,6 @@ function LandingPage() {
           <FeatureCard icon={'\uD83C\uDF10'} title="Lunar Node Ribbon" desc="18.6-year nodal cycle with zodiac position, ingress markers, and McWhirter labels." color={C.purple} image="/feature-lunar-node.png" onImageClick={openLightbox} />
           <FeatureCard icon={'\u2643'} title="Planetary Conjunctions" desc="Jupiter-Saturn and Saturn-Pluto hard aspects. The longest-cycle timing framework in the toolkit." color={C.blue} image="/feature-conjunctions.png" onImageClick={openLightbox} />
           <FeatureCard icon={'\u2605'} title="Cosmic Confluence Score" desc="Real-time 0-10 score combining all active layers. Heat strip visualization shows density at a glance." color={C.accent} image="/feature-cosmic-score.png" onImageClick={openLightbox} />
-        </div>
-      </Section>
-
-      {/* ══════════════════════════════════════
-         4b. COSMIC SCORE PROOF
-         ══════════════════════════════════════ */}
-      <Section id="proof" style={{ paddingTop: 40, paddingBottom: 40 }}>
-        <div style={{
-          background: C.bgCard, borderRadius: 16,
-          border: `1px solid ${C.gold}33`,
-          boxShadow: `0 0 40px ${C.gold}11, 0 8px 32px rgba(0,0,0,0.4)`,
-          padding: '40px 32px', position: 'relative', overflow: 'hidden',
-        }}>
-          <div style={{
-            position: 'absolute', top: 16, left: 16,
-            background: `linear-gradient(135deg, ${C.gold}, ${C.orange})`,
-            borderRadius: 6, padding: '4px 12px',
-            fontFamily: F.mono, fontSize: '0.65rem', fontWeight: 600, color: C.bg,
-            letterSpacing: '0.08em', textTransform: 'uppercase',
-          }}>LIVE CASE STUDY</div>
-          <div style={{ textAlign: 'center', marginTop: 16 }}>
-            <h2 style={{
-              fontFamily: F.display, fontSize: 'clamp(1.8rem, 5vw, 2.8rem)',
-              fontWeight: 800, color: C.gold, lineHeight: 1.15, marginBottom: 8,
-            }}>10.0 Cosmic Score.</h2>
-            <p style={{
-              fontFamily: F.display, fontSize: 'clamp(1.1rem, 3vw, 1.6rem)',
-              fontWeight: 600, color: C.text, marginBottom: 16,
-            }}>Two weeks later, historic crash.</p>
-            <p style={{
-              fontFamily: F.body, fontSize: '0.9rem', color: C.textSec,
-              maxWidth: 600, margin: '0 auto 28px', lineHeight: 1.7,
-            }}>
-              September 21, 2025. Every cycle framework aligned simultaneously.
-              The score hit maximum. BTC dropped 45% in the weeks that followed.
-            </p>
-          </div>
-          <img
-            src="/cosmic-score-proof.png"
-            alt="Cosmic Confluence Score hitting 10.0 before the September 2025 BTC crash"
-            onClick={() => openLightbox('/cosmic-score-proof.png', 'Cosmic Score 10.0 — September 2025')}
-            style={{
-              width: '100%', borderRadius: 8, display: 'block', cursor: 'pointer',
-            }}
-          />
         </div>
       </Section>
 
