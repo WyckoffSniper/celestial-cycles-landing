@@ -195,4 +195,12 @@ button {
   .steps-section { padding-top: 80px !important; }
   .steps-line { display: none !important; }
   .pricing-section { padding-top: 80px !important; }
+  .faq-section { padding-top: 80px !important; }
+  .site-footer {
+    flex-direction: column !important;
+    gap: 20px !important;
+    text-align: center !important;
+  }
+  .site-footer > div { align-items: center; }
+  .site-footer > div:first-child { display: flex; flex-direction: column; align-items: center; }
 }

@@ -345,33 +345,37 @@ function FaqItem({ question, answer }) {
   const [open, setOpen] = useState(false);
   return (
     <div style={{
-      borderBottom: `1px solid ${C.border}`,
+      background: 'var(--bg-card)', border: '1px solid var(--border)',
+      borderRadius: 'var(--radius-md)', marginBottom: 8, overflow: 'hidden',
     }}>
       <button
+        className="faq-btn"
         onClick={() => setOpen(v => !v)}
         style={{
           width: '100%', background: 'none', border: 'none', cursor: 'pointer',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-          padding: '18px 0', textAlign: 'left',
+          padding: '20px 24px', textAlign: 'left', transition: 'background 0.2s',
         }}
+        onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-card-hover)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
       >
         <span style={{
-          fontFamily: F.display, fontSize: '1rem', fontWeight: 600, color: C.text,
-          lineHeight: 1.4, paddingRight: 16,
+          fontFamily: F.body, fontSize: 15, fontWeight: 600,
+          color: 'var(--text-primary)', lineHeight: 1.4, paddingRight: 16,
         }}>{question}</span>
         <span style={{
-          fontFamily: F.mono, fontSize: '1.2rem', color: C.textSec,
-          transition: 'transform 0.2s', transform: open ? 'rotate(45deg)' : 'rotate(0)',
-          flexShrink: 0,
+          fontSize: 18, color: 'var(--text-tertiary)',
+          transition: 'transform 0.3s', transform: open ? 'rotate(45deg)' : 'rotate(0)',
+          flexShrink: 0, lineHeight: 1,
         }}>+</span>
       </button>
       <div style={{
-        maxHeight: open ? 300 : 0, overflow: 'hidden',
-        transition: 'max-height 0.3s ease',
+        maxHeight: open ? 400 : 0, overflow: 'hidden',
+        transition: 'max-height 0.4s ease',
       }}>
         <p style={{
-          fontFamily: F.body, fontSize: '0.9rem', color: C.textSec,
-          lineHeight: 1.7, paddingBottom: 18,
+          fontFamily: F.body, fontSize: 14, color: 'var(--text-secondary)',
+          lineHeight: 1.7, padding: '0 24px 20px 24px',
         }}>{answer}</p>
       </div>
     </div>
@@ -1205,94 +1209,134 @@ function LandingPage() {
       </section>
 
       {/* ══════════════════════════════════════
-         8. FINAL CTA
+         FAQ
          ══════════════════════════════════════ */}
-      <section style={{
-        padding: '80px 24px', textAlign: 'center',
-        background: `radial-gradient(ellipse at center, ${C.accent}11 0%, transparent 70%)`,
-      }}>
-        <h2 style={{
-          fontFamily: F.display, fontSize: 'clamp(1.6rem, 4vw, 2.4rem)',
-          fontWeight: 800, color: C.text, marginBottom: 16, lineHeight: 1.2,
-        }}>
-          The Cycles Are Moving.<br />Are You Watching?
-        </h2>
-        <p style={{
-          fontFamily: F.body, fontSize: '1rem', color: C.textSec, maxWidth: 480, margin: '0 auto 28px', lineHeight: 1.6,
-        }}>
-          Open a free chart in seconds. No signup required.
-        </p>
-        <a href={APP_URL} style={{
-          fontFamily: F.body, fontSize: '1.05rem', fontWeight: 600, color: C.white,
-          textDecoration: 'none',
-          background: `linear-gradient(135deg, ${C.accent}, ${C.purple})`,
-          borderRadius: 8, padding: '16px 40px', display: 'inline-block',
-          boxShadow: `0 4px 24px ${C.accent}44`,
-          transition: 'transform 0.2s, box-shadow 0.2s',
-        }}
-        onMouseEnter={e => { e.target.style.transform = 'translateY(-2px)'; e.target.style.boxShadow = `0 6px 32px ${C.accent}66`; }}
-        onMouseLeave={e => { e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = `0 4px 24px ${C.accent}44`; }}
-        >Launch Cosmic Charts</a>
+      <section className="faq-section" id="faq" style={{ padding: '120px 24px 80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 48 }}>
+          <div style={{
+            fontSize: 12, fontWeight: 500, letterSpacing: '0.15em',
+            textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16,
+          }}>FAQ</div>
+          <h2 style={{
+            fontFamily: F.display, fontWeight: 800,
+            fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.1,
+            letterSpacing: '-0.03em', color: 'var(--text-primary)',
+          }}>Common Questions</h2>
+        </div>
+        <div style={{ maxWidth: 680, margin: '0 auto' }}>
+          <FaqItem
+            question="What data sources does Cosmic Charts use?"
+            answer="Live OHLCV data from Bybit and Binance. No API keys required — just open the chart and go."
+          />
+          <FaqItem
+            question="Is this astrology?"
+            answer="No. We overlay empirically observable astronomical events (eclipses, planetary conjunctions, lunar cycles) alongside established financial timing frameworks (Hurst, Gann, Benner). You decide what matters to your strategy."
+          />
+          <FaqItem
+            question="Can I use this with TradingView?"
+            answer="Cosmic Charts is a standalone web app — no TradingView integration needed. It includes standard indicators (MA, RSI) alongside the cycle overlays. If you need Pine Script, TradingView is the better choice for that."
+          />
+          <FaqItem
+            question="What's the Cosmic Confluence Score?"
+            answer="A real-time 0–10 score that combines all your active overlay layers into a single number. Higher scores mean more frameworks are aligned at that point in time."
+          />
+          <FaqItem
+            question="Can I cancel anytime?"
+            answer="Yes. All plans are month-to-month with no commitment. Cancel from your account settings and you keep access through the end of your billing period."
+          />
+          <FaqItem
+            question="Do you support assets other than crypto?"
+            answer="Currently crypto only (BTC, ETH, and 50+ pairs). Multi-asset support (S&P 500, Gold, Silver, Oil, DXY) is on the roadmap."
+          />
+        </div>
       </section>
 
       {/* ══════════════════════════════════════
-         9. FAQ
+         FINAL CTA
          ══════════════════════════════════════ */}
-      <Section id="faq">
-        <SectionTitle
-          tag="FAQ"
-          title="Frequently Asked Questions"
-        />
-        <div style={{ maxWidth: 680, margin: '0 auto' }}>
-          <FaqItem
-            question="How do I subscribe to Cosmic Charts?"
-            answer="Cosmic Charts runs on your Wyckoff Labs account — the same account used for TradeOS, our professional trading journal. If you don't have one yet, creating it is free and takes 30 seconds. Once you're logged in, click any locked feature on the chart and you'll be taken directly to Stripe checkout to activate your plan."
-          />
-          <FaqItem
-            question="Do I need a TradeOS subscription too?"
-            answer="No. A Wyckoff Labs account is free. Cosmic Charts and TradeOS are separate subscriptions — you only pay for what you want. That said, TradeOS Elite subscribers get full Cosmic Charts Elite access included at no extra charge."
-          />
-        </div>
-      </Section>
+      <section style={{
+        padding: '120px 24px 80px', textAlign: 'center', position: 'relative',
+      }}>
+        {/* Ambient glow */}
+        <div aria-hidden="true" style={{
+          position: 'absolute', top: '50%', left: '50%',
+          transform: 'translate(-50%, -50%)',
+          width: 600, height: 300,
+          background: 'radial-gradient(ellipse at center, rgba(196,151,70,0.05) 0%, transparent 60%)',
+          pointerEvents: 'none',
+        }} />
+
+        <h2 style={{
+          fontFamily: F.display, fontWeight: 800,
+          fontSize: 'clamp(32px, 5vw, 52px)', lineHeight: 1.1,
+          letterSpacing: '-0.03em', color: 'var(--text-primary)',
+          marginBottom: 16, position: 'relative',
+        }}>The Cycles Are Moving.</h2>
+        <p style={{
+          fontFamily: F.body, fontSize: 17, color: 'var(--text-secondary)',
+          lineHeight: 1.5, marginBottom: 32, position: 'relative',
+        }}>Start charting what others can't see.</p>
+        <a href={APP_URL} target="_blank" rel="noopener noreferrer" style={{
+          display: 'inline-block', textDecoration: 'none', position: 'relative',
+          background: 'var(--gold)', color: '#0a0a0f',
+          fontFamily: F.body, fontWeight: 600, fontSize: 16,
+          padding: '16px 36px', borderRadius: 14,
+          boxShadow: '0 4px 20px rgba(196,151,70,0.25), inset 0 1px 0 rgba(255,255,255,0.15)',
+          transition: 'all 0.2s',
+        }}
+        onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.filter = 'brightness(1.1)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(196,151,70,0.35), inset 0 1px 0 rgba(255,255,255,0.15)'; }}
+        onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.filter = 'none'; e.currentTarget.style.boxShadow = '0 4px 20px rgba(196,151,70,0.25), inset 0 1px 0 rgba(255,255,255,0.15)'; }}
+        >Open Free Chart →</a>
+      </section>
 
       {/* ══════════════════════════════════════
-         10. FOOTER
+         FOOTER
          ══════════════════════════════════════ */}
-      <footer style={{
-        borderTop: `1px solid ${C.border}`, padding: '32px 24px',
-        maxWidth: 1100, margin: '0 auto',
-        display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', gap: 16,
+      <footer className="site-footer" style={{
+        borderTop: '1px solid var(--border)', padding: 40,
+        maxWidth: 900, margin: '0 auto',
+        display: 'flex', justifyContent: 'space-between', alignItems: 'center',
       }}>
-        <div style={{ fontFamily: F.body, fontSize: '0.8rem', color: C.textSec }}>
-          &copy; {new Date().getFullYear()} Wyckoff Labs. All rights reserved.
+        <div>
+          <div style={{
+            display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4,
+          }}>
+            <div style={{
+              width: 8, height: 8, borderRadius: '50%',
+              background: 'var(--gold)',
+              boxShadow: '0 0 6px rgba(196,151,70,0.4)',
+            }} />
+            <span style={{
+              fontFamily: F.display, fontWeight: 700, fontSize: 15,
+              color: 'var(--text-primary)',
+            }}>Cosmic Charts</span>
+          </div>
+          <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
+            &copy; {new Date().getFullYear()} Wyckoff Labs. All rights reserved.
+          </div>
         </div>
-        <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 0, flexWrap: 'wrap' }}>
           {[
-            { label: 'App', href: APP_URL },
-            { label: 'Wyckoff Labs', href: 'https://wyckofflabs.com' },
-          ].map(l => (
-            <a key={l.label} href={l.href} target="_blank" rel="noopener noreferrer" style={{
-              fontFamily: F.body, fontSize: '0.8rem', color: C.textSec, textDecoration: 'none',
-              transition: 'color 0.2s',
-            }}
-            onMouseEnter={e => e.target.style.color = C.text}
-            onMouseLeave={e => e.target.style.color = C.textSec}
-            >{l.label}</a>
+            { label: 'Features', href: '#features' },
+            { label: 'Compare', href: '#compare' },
+            { label: 'Pricing', href: '#pricing' },
+            { label: 'FAQ', href: '#faq' },
+            { label: 'Launch App', href: APP_URL, external: true },
+          ].map((l, i, arr) => (
+            <span key={l.label}>
+              <a
+                href={l.href}
+                {...(l.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                style={{
+                  fontSize: 13, color: 'var(--text-tertiary)',
+                  textDecoration: 'none', transition: 'color 0.2s',
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = 'var(--text-secondary)'}
+                onMouseLeave={e => e.currentTarget.style.color = 'var(--text-tertiary)'}
+              >{l.label}</a>
+              {i < arr.length - 1 && <span style={{ color: 'var(--text-tertiary)', margin: '0 8px' }}>&middot;</span>}
+            </span>
           ))}
-          <Link to="/privacy" style={{
-            fontFamily: F.body, fontSize: '0.8rem', color: C.textSec, textDecoration: 'none',
-            transition: 'color 0.2s',
-          }}
-          onMouseEnter={e => e.target.style.color = C.text}
-          onMouseLeave={e => e.target.style.color = C.textSec}
-          >Privacy Policy</Link>
-          <a href="mailto:support@wyckofflabs.com" style={{
-            fontFamily: F.body, fontSize: '0.8rem', color: C.textSec, textDecoration: 'none',
-            transition: 'color 0.2s',
-          }}
-          onMouseEnter={e => e.target.style.color = C.text}
-          onMouseLeave={e => e.target.style.color = C.textSec}
-          >support@wyckofflabs.com</a>
         </div>
       </footer>
     </div>
