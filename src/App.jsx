@@ -615,7 +615,7 @@ function LandingPage() {
         display: 'flex', alignItems: 'center', gap: 8,
       }}>
         <a href="#" style={{
-          fontFamily: 'var(--font-display)', fontSize: 16, fontWeight: 700,
+          fontFamily: F.display, fontSize: 16, fontWeight: 700,
           letterSpacing: '-0.02em', color: 'var(--text-primary)',
           textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 8,
           marginRight: 8, whiteSpace: 'nowrap',
@@ -633,7 +633,7 @@ function LandingPage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 4 }} className="nav-desktop">
           {['Features', 'Compare', 'Pricing', 'FAQ'].map(l => (
             <a key={l} href={`#${l.toLowerCase()}`} style={{
-              fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 500,
+              fontFamily: F.body, fontSize: 14, fontWeight: 500,
               color: 'var(--text-tertiary)', textDecoration: 'none',
               padding: '8px 16px', borderRadius: 'var(--radius-sm)',
               transition: 'color var(--duration-fast) ease, background var(--duration-fast) ease',
@@ -643,7 +643,7 @@ function LandingPage() {
             >{l}</a>
           ))}
           <a href={APP_URL} style={{
-            fontFamily: 'var(--font-body)', fontSize: 14, fontWeight: 600,
+            fontFamily: F.body, fontSize: 14, fontWeight: 600,
             color: '#0a0a0f', textDecoration: 'none',
             background: 'var(--gold)', borderRadius: 'var(--radius-sm)',
             padding: '8px 20px', marginLeft: 4,
@@ -689,7 +689,7 @@ function LandingPage() {
         }}>
           {['Features', 'Compare', 'Pricing', 'FAQ'].map(l => (
             <a key={l} href={`#${l.toLowerCase()}`} onClick={() => setMobileNav(false)} style={{
-              fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 500,
+              fontFamily: F.body, fontSize: 15, fontWeight: 500,
               color: 'var(--text-secondary)', textDecoration: 'none',
               padding: '10px 12px', borderRadius: 'var(--radius-sm)',
               transition: 'color var(--duration-fast) ease, background var(--duration-fast) ease',
@@ -699,7 +699,7 @@ function LandingPage() {
             >{l}</a>
           ))}
           <a href={APP_URL} onClick={() => setMobileNav(false)} style={{
-            fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 600,
+            fontFamily: F.body, fontSize: 15, fontWeight: 600,
             color: '#0a0a0f', textDecoration: 'none', textAlign: 'center',
             background: 'var(--gold)', borderRadius: 'var(--radius-sm)',
             padding: '12px 20px', marginTop: 4,
@@ -725,13 +725,13 @@ function LandingPage() {
         }} />
 
         <div className="hero-anim hero-anim-0" style={{
-          fontFamily: 'var(--font-body)', fontSize: 12, fontWeight: 500,
+          fontFamily: F.body, fontSize: 12, fontWeight: 500,
           letterSpacing: '0.15em', textTransform: 'uppercase',
           color: 'var(--gold)', marginBottom: 16,
         }}>Multi-Framework Cycle Analysis</div>
 
         <h1 className="hero-anim hero-anim-1" style={{
-          fontFamily: 'var(--font-display)', fontWeight: 800,
+          fontFamily: F.display, fontWeight: 800,
           fontSize: 'clamp(36px, 6vw, 64px)', lineHeight: 1.05,
           letterSpacing: '-0.03em', color: 'var(--text-primary)',
           marginBottom: 20, maxWidth: 720,
@@ -740,7 +740,7 @@ function LandingPage() {
         </h1>
 
         <p className="hero-anim hero-anim-2" style={{
-          fontFamily: 'var(--font-body)', fontSize: 17, lineHeight: 1.6,
+          fontFamily: F.body, fontSize: 17, lineHeight: 1.6,
           color: 'var(--text-secondary)', maxWidth: 560, margin: '0 auto 32px',
         }}>
           Moon phases, retrogrades, eclipses, Hurst arcs, Gann countdowns, planetary
@@ -749,7 +749,7 @@ function LandingPage() {
 
         <div className="hero-anim hero-anim-3" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href={APP_URL} style={{
-            fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 600,
+            fontFamily: F.body, fontSize: 15, fontWeight: 600,
             color: '#0a0a0f', textDecoration: 'none',
             background: 'var(--gold)', borderRadius: 'var(--radius-sm)',
             padding: '14px 32px',
@@ -760,7 +760,7 @@ function LandingPage() {
           onMouseLeave={e => { e.target.style.background = 'var(--gold)'; e.target.style.transform = 'translateY(0)'; e.target.style.boxShadow = '0 4px 16px rgba(196,151,70,0.2), inset 0 1px 0 rgba(255,255,255,0.15)'; }}
           >Open Free Chart</a>
           <a href="#pricing" style={{
-            fontFamily: 'var(--font-body)', fontSize: 15, fontWeight: 500,
+            fontFamily: F.body, fontSize: 15, fontWeight: 500,
             color: 'var(--text-secondary)', textDecoration: 'none',
             background: 'transparent', border: '1px solid var(--border-hover)',
             borderRadius: 'var(--radius-sm)', padding: '14px 28px',
