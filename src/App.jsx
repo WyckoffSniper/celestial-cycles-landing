@@ -173,53 +173,115 @@ function HeroChartCard() {
 /* ═══════════════════════════════════════════
    PRICING CARD
    ═══════════════════════════════════════════ */
-function PricingCard({ name, price, period, features, accent, popular, ctaLabel, ctaHref }) {
+function PricingCard({ name, price, period, features, popular, ctaLabel, ctaHref, delay = 0 }) {
+  const checkColor = popular || name === 'Elite' ? 'var(--gold)' : 'var(--text-tertiary)';
+
   return (
     <div style={{
-      background: C.bgCard, borderRadius: 14,
-      border: popular ? `2px solid ${accent}` : `1px solid ${C.border}`,
-      padding: '32px 28px', flex: '1 1 280px', maxWidth: 340,
-      position: 'relative', transition: 'transform 0.3s cubic-bezier(0.34,1.56,0.64,1)',
-      cursor: 'default',
-    }}
-    onMouseEnter={e => e.currentTarget.style.transform = 'translateY(-6px)'}
-    onMouseLeave={e => e.currentTarget.style.transform = 'translateY(0)'}
-    >
-      {popular && (
-        <div style={{
-          position: 'absolute', top: -12, left: '50%', transform: 'translateX(-50%)',
-          background: `linear-gradient(135deg, ${accent}, ${C.purple})`,
-          borderRadius: 20, padding: '3px 14px',
-          fontFamily: F.body, fontSize: '0.7rem', fontWeight: 600, color: C.white,
-          letterSpacing: '0.05em', textTransform: 'uppercase',
-        }}>Most Popular</div>
-      )}
-      <div style={{ fontFamily: F.display, fontSize: '1.2rem', fontWeight: 700, color: C.text, marginBottom: 8 }}>{name}</div>
-      <div style={{ marginBottom: 20 }}>
-        <span style={{ fontFamily: F.display, fontSize: '2.4rem', fontWeight: 800, color: accent }}>{price}</span>
-        {period && <span style={{ fontFamily: F.body, fontSize: '0.85rem', color: C.textSec, marginLeft: 4 }}>/{period}</span>}
+      background: 'var(--bg-card)', backdropFilter: 'var(--glass-blur)',
+      WebkitBackdropFilter: 'var(--glass-blur)',
+      border: popular ? '1px solid var(--border-gold)' : '1px solid var(--border)',
+      borderRadius: 'var(--radius-xl)', padding: 32,
+      flex: '1 1 280px', maxWidth: 340, position: 'relative', overflow: 'hidden',
+      boxShadow: popular ? '0 8px 32px rgba(0,0,0,0.3), 0 0 60px rgba(196,151,70,0.05)' : 'none',
+      display: 'flex', flexDirection: 'column',
+      opacity: 0, animation: `fadeSlideIn 0.6s var(--ease-smooth) ${delay}ms forwards`,
+    }}>
+      {/* Gold shimmer line (Pro only) */}
+      {popular && <div aria-hidden="true" style={{
+        position: 'absolute', top: 0, left: 0, right: 0, height: 1,
+        background: 'linear-gradient(90deg, transparent, rgba(196,151,70,0.4), transparent)',
+      }} />}
+
+      {/* Most Popular badge (Pro only) */}
+      {popular && <div style={{
+        display: 'inline-block', padding: '4px 12px', marginBottom: 16,
+        fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em',
+        background: 'rgba(196,151,70,0.15)', color: 'var(--gold)',
+        borderRadius: 100, border: '1px solid rgba(196,151,70,0.2)',
+        alignSelf: 'flex-start',
+      }}>Most Popular</div>}
+
+      {/* Plan name + price */}
+      <div style={{
+        fontFamily: F.display, fontWeight: 700, fontSize: 20,
+        color: 'var(--text-primary)', marginBottom: 8,
+      }}>{name}</div>
+      <div style={{ marginBottom: 28 }}>
+        <span style={{
+          fontFamily: F.display, fontWeight: 800, fontSize: 44,
+          color: 'var(--text-primary)', letterSpacing: '-0.03em',
+        }}>{price}</span>
+        {period && <span style={{
+          fontSize: 14, color: 'var(--text-tertiary)', fontWeight: 400, marginLeft: 4,
+        }}>/{period}</span>}
       </div>
-      <ul style={{ listStyle: 'none', marginBottom: 24 }}>
+
+      {/* Features list */}
+      <ul style={{ listStyle: 'none', marginBottom: 0, flex: 1 }}>
         {features.map((f, i) => (
           <li key={i} style={{
-            fontFamily: F.body, fontSize: '0.85rem', color: C.text, padding: '6px 0',
-            borderBottom: i < features.length - 1 ? `1px solid ${C.border}` : 'none',
-            display: 'flex', alignItems: 'center', gap: 8,
+            fontFamily: F.body, fontSize: 14, color: 'var(--text-secondary)',
+            padding: '9px 0', display: 'flex', alignItems: 'center', gap: 8,
+            borderBottom: i < features.length - 1 ? '1px solid rgba(255,255,255,0.03)' : 'none',
           }}>
-            <span style={{ color: accent, fontSize: '0.9rem' }}>{'\u2713'}</span>
+            <span style={{ color: checkColor }}>✓</span>
             {f}
           </li>
         ))}
       </ul>
-      <a href={ctaHref || APP_URL} style={{
-        display: 'block', textAlign: 'center', textDecoration: 'none',
-        background: popular ? `linear-gradient(135deg, ${accent}, ${C.purple})` : 'transparent',
-        border: popular ? 'none' : `1px solid ${accent}`,
-        borderRadius: 8, padding: '12px 0',
-        fontFamily: F.body, fontSize: '0.9rem', fontWeight: 600,
-        color: popular ? C.white : accent,
-        transition: 'opacity 0.2s',
-      }}>{ctaLabel || 'Get Started'}</a>
+
+      {/* CTA */}
+      {popular ? (
+        /* Spinning gold ring CTA for Pro */
+        <a href={ctaHref || APP_URL} style={{ textDecoration: 'none', display: 'block', marginTop: 28 }}>
+          <div style={{
+            position: 'relative', width: '100%', height: 52,
+            borderRadius: 14, overflow: 'hidden', cursor: 'pointer',
+            transition: 'transform 0.2s, box-shadow 0.2s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-1px)'; e.currentTarget.style.boxShadow = '0 8px 32px rgba(196,151,70,0.3)'; }}
+          onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = 'none'; }}
+          >
+            <div style={{
+              position: 'absolute', top: '50%', left: '50%',
+              width: '300%', height: '300%',
+              background: `conic-gradient(
+                from 0deg,
+                #533517 0%, #8b6a2f 8%, #c49746 16%, #feeaa5 24%,
+                #c49746 30%, #ffffff 33%, #ffc0cb 34.5%, #a8c8ff 36%,
+                #c49746 37.5%, #8b6a2f 42%, #533517 50%,
+                #8b6a2f 58%, #c49746 66%, #feeaa5 74%,
+                #c49746 80%, #ffffff 83%, #ffc0cb 84.5%, #a8c8ff 86%,
+                #c49746 87.5%, #8b6a2f 92%, #533517 100%
+              )`,
+              animation: 'spinRing 4.5s linear infinite',
+            }} />
+            <div style={{
+              position: 'absolute', inset: 2, borderRadius: 12,
+              background: 'rgba(14,14,22,0.92)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <span style={{
+                fontSize: 15, fontWeight: 600, fontFamily: F.body,
+                color: '#feeaa5', letterSpacing: '0.01em',
+              }}>{ctaLabel}</span>
+            </div>
+          </div>
+        </a>
+      ) : (
+        /* Ghost button for Free and Elite */
+        <a href={ctaHref || APP_URL} className="pricing-ghost-btn" style={{
+          display: 'block', textAlign: 'center', textDecoration: 'none',
+          marginTop: 28, background: 'transparent',
+          border: '1px solid var(--border-hover)', borderRadius: 14,
+          padding: 14, fontFamily: F.body, fontSize: 15, fontWeight: 500,
+          color: 'var(--text-secondary)', transition: 'all 0.2s',
+        }}
+        onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.04)'; e.currentTarget.style.color = 'var(--text-primary)'; }}
+        onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = 'var(--text-secondary)'; }}
+        >{ctaLabel}</a>
+      )}
     </div>
   );
 }
@@ -446,37 +508,28 @@ function ComparisonTable() {
 }
 
 /* ═══════════════════════════════════════════
-   TESTIMONIAL CARD
-   ═══════════════════════════════════════════ */
-function TestimonialCard({ quote, name, role }) {
-  return (
-    <div style={{
-      background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`,
-      padding: '28px 24px', flex: '1 1 280px', maxWidth: 340,
-    }}>
-      <div style={{ fontFamily: F.body, fontSize: '0.9rem', color: C.text, lineHeight: 1.7, marginBottom: 16, fontStyle: 'italic' }}>
-        &ldquo;{quote}&rdquo;
-      </div>
-      <div style={{ fontFamily: F.display, fontSize: '0.85rem', fontWeight: 600, color: C.gold }}>{name}</div>
-      <div style={{ fontFamily: F.body, fontSize: '0.75rem', color: C.textSec }}>{role}</div>
-    </div>
-  );
-}
-
-/* ═══════════════════════════════════════════
    STEP CARD (How It Works)
    ═══════════════════════════════════════════ */
-function StepCard({ number, title, desc }) {
+function StepCard({ number, title, desc, delay = 0 }) {
   return (
-    <div style={{ flex: '1 1 220px', maxWidth: 280, textAlign: 'center' }}>
+    <div style={{
+      flex: '1 1 220px', maxWidth: 280, textAlign: 'center',
+      opacity: 0, animation: `fadeSlideIn 0.6s var(--ease-smooth) ${delay}ms forwards`,
+    }}>
       <div style={{
-        width: 48, height: 48, borderRadius: '50%', margin: '0 auto 16px',
-        background: `linear-gradient(135deg, ${C.accent}, ${C.purple})`,
+        width: 48, height: 48, borderRadius: '50%', margin: '0 auto 20px',
+        background: 'var(--gold-dim)', border: '1px solid rgba(196,151,70,0.25)',
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        fontFamily: F.display, fontSize: '1.2rem', fontWeight: 800, color: C.white,
+        fontFamily: F.display, fontSize: 18, fontWeight: 700, color: 'var(--gold)',
       }}>{number}</div>
-      <div style={{ fontFamily: F.display, fontSize: '1rem', fontWeight: 700, color: C.text, marginBottom: 8 }}>{title}</div>
-      <div style={{ fontFamily: F.body, fontSize: '0.85rem', color: C.textSec, lineHeight: 1.6 }}>{desc}</div>
+      <div style={{
+        fontFamily: F.display, fontWeight: 700, fontSize: 17,
+        color: 'var(--text-primary)', letterSpacing: '-0.01em', marginBottom: 8,
+      }}>{title}</div>
+      <div style={{
+        fontFamily: F.body, fontSize: 14, lineHeight: 1.6,
+        color: 'var(--text-secondary)', maxWidth: 240, margin: '0 auto',
+      }}>{desc}</div>
     </div>
   );
 }
@@ -1037,65 +1090,72 @@ function LandingPage() {
       </section>
 
       {/* ══════════════════════════════════════
-         5. TESTIMONIALS
+         GETTING STARTED
          ══════════════════════════════════════ */}
-      <section style={{ background: `linear-gradient(180deg, ${C.bg} 0%, ${C.bgPanel} 50%, ${C.bg} 100%)`, padding: '80px 24px' }}>
-        <div style={{ maxWidth: 1100, margin: '0 auto' }}>
-          <SectionTitle
-            tag="Traders Say"
-            title="Built for Cycle Traders, by Cycle Traders"
-          />
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, justifyContent: 'center' }}>
-            <TestimonialCard
-              quote="I used to spend hours plotting moon phases manually on TradingView. Cosmic Charts does it instantly across every timeframe."
-              name="Alex K."
-              role="Crypto Swing Trader"
-            />
-            <TestimonialCard
-              quote="The confluence score changed how I time entries. When Hurst, Gann, and eclipses align, the signal is impossible to ignore."
-              name="Sarah M."
-              role="Institutional Analyst"
-            />
-            <TestimonialCard
-              quote="Finally a tool that takes planetary cycles seriously without looking like it was built in 2005. Clean UI, real data."
-              name="Daniel R."
-              role="Full-Time Trader"
-            />
-          </div>
+      <section className="steps-section" style={{ padding: '120px 24px 80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 64 }}>
+          <div style={{
+            fontSize: 12, fontWeight: 500, letterSpacing: '0.15em',
+            textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16,
+          }}>GETTING STARTED</div>
+          <h2 style={{
+            fontFamily: F.display, fontWeight: 800,
+            fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.1,
+            letterSpacing: '-0.03em', color: 'var(--text-primary)',
+            marginBottom: 12,
+          }}>Three Clicks to Cycle Analysis</h2>
+          <p style={{
+            fontFamily: F.body, fontSize: 15, lineHeight: 1.6,
+            color: 'var(--text-secondary)',
+          }}>No downloads, no API keys, no account required for the free tier.</p>
+        </div>
+
+        <div style={{
+          display: 'flex', flexWrap: 'wrap', gap: 32,
+          justifyContent: 'center', maxWidth: 900, margin: '0 auto',
+          position: 'relative',
+        }}>
+          {/* Connecting dashed line (desktop only) */}
+          <div className="steps-line" aria-hidden="true" style={{
+            position: 'absolute', top: 24, left: '20%', right: '20%',
+            borderTop: '1px dashed rgba(255,255,255,0.06)',
+            pointerEvents: 'none',
+          }} />
+          <StepCard number="1" title="Open the Chart" desc="Load any crypto pair on any timeframe. Live data from Bybit and Binance." delay={0} />
+          <StepCard number="2" title="Toggle Overlays" desc="Enable moon phases, retrogrades, Hurst arcs, Gann countdowns — any combination." delay={100} />
+          <StepCard number="3" title="Spot Confluences" desc="The Cosmic Score highlights where multiple frameworks converge. Time your entries with precision." delay={200} />
         </div>
       </section>
 
       {/* ══════════════════════════════════════
-         6. HOW IT WORKS
+         PRICING
          ══════════════════════════════════════ */}
-      <Section id="how">
-        <SectionTitle
-          tag="Getting Started"
-          title="Three Clicks to Cycle Analysis"
-          subtitle="No downloads, no API keys, no account required for the free tier."
-        />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 40, justifyContent: 'center' }}>
-          <StepCard number="1" title="Open the Chart" desc="Load any crypto pair on any timeframe. Live data from Bybit and Binance." />
-          <StepCard number="2" title="Toggle Overlays" desc="Enable moon phases, retrogrades, Hurst arcs, Gann countdowns &mdash; any combination." />
-          <StepCard number="3" title="Spot Confluences" desc="The Cosmic Score highlights where multiple frameworks converge. Time your entries with precision." />
+      <section className="pricing-section" id="pricing" style={{ padding: '120px 24px 80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 64 }}>
+          <div style={{
+            fontSize: 12, fontWeight: 500, letterSpacing: '0.15em',
+            textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16,
+          }}>PLANS</div>
+          <h2 style={{
+            fontFamily: F.display, fontWeight: 800,
+            fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.1,
+            letterSpacing: '-0.03em', color: 'var(--text-primary)',
+            marginBottom: 12,
+          }}>Choose Your Cycle Toolkit</h2>
+          <p style={{
+            fontFamily: F.body, fontSize: 15, lineHeight: 1.6,
+            color: 'var(--text-secondary)',
+          }}>Start free. Upgrade when you need deeper analysis.</p>
         </div>
-      </Section>
 
-      {/* ══════════════════════════════════════
-         7. PRICING
-         ══════════════════════════════════════ */}
-      <Section id="pricing">
-        <SectionTitle
-          tag="Plans"
-          title="Choose Your Cycle Toolkit"
-          subtitle="Start free. Upgrade when you need deeper analysis."
-        />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, justifyContent: 'center', alignItems: 'flex-start' }}>
+        <div style={{
+          display: 'flex', flexWrap: 'wrap', gap: 20,
+          justifyContent: 'center', alignItems: 'stretch',
+          maxWidth: 1000, margin: '0 auto',
+        }}>
           <PricingCard
             name="Free"
             price="$0"
-            period={null}
-            accent={C.textSec}
             features={[
               'Live crypto charts (all pairs)',
               'Moon phase overlays',
@@ -1104,12 +1164,12 @@ function LandingPage() {
               'Unlimited timeframes',
             ]}
             ctaLabel="Start Free"
+            delay={0}
           />
           <PricingCard
             name="Pro"
             price="$9.95"
             period="mo"
-            accent={C.accent}
             popular
             features={[
               'Everything in Free',
@@ -1122,12 +1182,12 @@ function LandingPage() {
             ]}
             ctaLabel="Upgrade to Pro"
             ctaHref={`${APP_URL}?upgrade=pro`}
+            delay={100}
           />
           <PricingCard
             name="Elite"
             price="$19.95"
             period="mo"
-            accent={C.gold}
             features={[
               'Everything in Pro',
               'Jupiter-Saturn conjunctions',
@@ -1139,9 +1199,10 @@ function LandingPage() {
             ]}
             ctaLabel="Go Elite"
             ctaHref={`${APP_URL}?upgrade=elite`}
+            delay={200}
           />
         </div>
-      </Section>
+      </section>
 
       {/* ══════════════════════════════════════
          8. FINAL CTA

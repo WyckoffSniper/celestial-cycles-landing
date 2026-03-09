@@ -192,4 +192,7 @@ button {
   .compare-section { padding-top: 80px !important; }
   .compare-row { grid-template-columns: 1fr 80px 80px !important; font-size: 13px; }
   .convergence-banner { padding: 28px 24px !important; }
+  .steps-section { padding-top: 80px !important; }
+  .steps-line { display: none !important; }
+  .pricing-section { padding-top: 80px !important; }
 }
