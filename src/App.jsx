@@ -30,7 +30,7 @@ const C = {
 const F = {
   display: "'Syne', sans-serif",
   body:    "'DM Sans', sans-serif",
-  mono:    "'DM Mono', monospace",
+  mono:    "'JetBrains Mono', monospace",
 };
 
 const APP_URL = 'https://app.cosmiccharts.com';
