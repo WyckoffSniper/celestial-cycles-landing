@@ -1312,7 +1312,7 @@ function LandingPage() {
             }}>Cosmic Charts</span>
           </div>
           <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
-            &copy; {new Date().getFullYear()} Wyckoff Labs. All rights reserved.
+            &copy; 2026 Wyckoff Labs. All rights reserved.
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 0, flexWrap: 'wrap' }}>
