@@ -172,4 +172,15 @@ button {
 @media (max-width: 768px) {
   .case-study-section { padding-top: 80px !important; }
   .case-study-card { padding: 24px !important; }
+  .features-section { padding-top: 80px !important; }
+}
+
+/* ═══════════════════════════════════════════
+   FEATURE GRID RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .feature-grid { grid-template-columns: repeat(2, 1fr) !important; }
+}
+@media (max-width: 640px) {
+  .feature-grid { grid-template-columns: 1fr !important; }
 }

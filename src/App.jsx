@@ -227,33 +227,50 @@ function PricingCard({ name, price, period, features, accent, popular, ctaLabel,
 /* ═══════════════════════════════════════════
    FEATURE CARD
    ═══════════════════════════════════════════ */
-function FeatureCard({ icon, title, desc, color, image, onImageClick }) {
+function FeatureCard({ icon, title, desc, image, delay = 0 }) {
   return (
-    <div style={{
-      background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`,
-      padding: '28px 24px', flex: '1 1 260px', maxWidth: 320,
-      transition: 'border-color 0.3s',
-    }}
-    onMouseEnter={e => e.currentTarget.style.borderColor = color}
-    onMouseLeave={e => e.currentTarget.style.borderColor = C.border}
+    <div
+      className="feature-card"
+      style={{
+        background: 'var(--bg-card)', backdropFilter: 'var(--glass-blur)',
+        WebkitBackdropFilter: 'var(--glass-blur)',
+        border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)',
+        padding: 24, cursor: 'default',
+        transition: 'all 0.3s var(--ease-spring)',
+        opacity: 0, animation: `fadeSlideIn 0.5s var(--ease-smooth) ${delay}ms forwards`,
+      }}
+      onMouseEnter={e => {
+        e.currentTarget.style.background = 'var(--bg-card-hover)';
+        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+        e.currentTarget.style.transform = 'translateY(-2px)';
+        e.currentTarget.style.boxShadow = '0 12px 32px rgba(0,0,0,0.3)';
+        const img = e.currentTarget.querySelector('.feature-img');
+        if (img) img.style.opacity = '0.9';
+      }}
+      onMouseLeave={e => {
+        e.currentTarget.style.background = 'var(--bg-card)';
+        e.currentTarget.style.borderColor = 'var(--border)';
+        e.currentTarget.style.transform = 'translateY(0)';
+        e.currentTarget.style.boxShadow = 'none';
+        const img = e.currentTarget.querySelector('.feature-img');
+        if (img) img.style.opacity = '0.7';
+      }}
     >
-      <div style={{ fontSize: '1.8rem', marginBottom: 12 }}>{icon}</div>
-      <div style={{ fontFamily: F.display, fontSize: '1.05rem', fontWeight: 700, color: C.text, marginBottom: 8 }}>{title}</div>
-      <div style={{ fontFamily: F.body, fontSize: '0.85rem', color: C.textSec, lineHeight: 1.6 }}>{desc}</div>
+      <div style={{ fontSize: 28, marginBottom: 14 }}>{icon}</div>
+      <div style={{
+        fontFamily: F.display, fontWeight: 700, fontSize: 17,
+        color: 'var(--text-primary)', letterSpacing: '-0.01em', marginBottom: 8,
+      }}>{title}</div>
+      <div style={{
+        fontFamily: F.body, fontSize: 13, lineHeight: 1.55,
+        color: 'var(--text-secondary)',
+      }}>{desc}</div>
       {image && (
-        <div
-          onClick={() => onImageClick && onImageClick(image, title)}
-          style={{ marginTop: 16, cursor: 'pointer', position: 'relative' }}
-        >
-          <img src={image} alt={title} style={{
-            width: '100%', height: 140, objectFit: 'cover', borderRadius: 6, display: 'block',
-          }} />
-          <div style={{
-            position: 'absolute', bottom: 6, right: 6,
-            fontFamily: F.mono, fontSize: '0.6rem', color: C.textSec,
-            background: 'rgba(10,12,20,0.7)', borderRadius: 4, padding: '2px 6px',
-          }}>{'\uD83D\uDD0D'} click to expand</div>
-        </div>
+        <img className="feature-img" src={image} alt={title} style={{
+          width: '100%', display: 'block', marginTop: 16,
+          borderRadius: 'var(--radius-sm)', border: '1px solid var(--border)',
+          opacity: 0.7, transition: 'opacity 0.3s',
+        }} />
       )}
     </div>
   );
@@ -880,6 +897,46 @@ function LandingPage() {
       </section>
 
       {/* ══════════════════════════════════════
+         OVERLAY LAYERS FEATURE GRID
+         ══════════════════════════════════════ */}
+      <section className="features-section" id="features" style={{ padding: '120px 24px 80px' }}>
+        <div style={{ textAlign: 'center', marginBottom: 64, maxWidth: 1000, margin: '0 auto 64px' }}>
+          <div style={{
+            fontSize: 12, fontWeight: 500, letterSpacing: '0.15em',
+            textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16,
+          }}>OVERLAY LAYERS</div>
+          <h2 style={{
+            fontFamily: F.display, fontWeight: 800,
+            fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.1,
+            letterSpacing: '-0.03em', color: 'var(--text-primary)',
+            marginBottom: 12,
+          }}>Every Cycle Framework, One Chart</h2>
+          <p style={{
+            fontFamily: F.body, fontSize: 15, lineHeight: 1.6,
+            color: 'var(--text-secondary)', maxWidth: 520, margin: '0 auto',
+          }}>
+            Toggle between 16 independent overlay layers. Each one adds a timing
+            dimension that traditional charting misses.
+          </p>
+        </div>
+
+        <div className="feature-grid" style={{
+          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: 16, maxWidth: 1000, margin: '0 auto',
+        }}>
+          <FeatureCard icon="🌙" title="Moon Phases" desc="New & full moon markers with supermoon highlighting. See lunar rhythm on every timeframe." image="/feature-moon.png" delay={800} />
+          <FeatureCard icon="☿" title="Mercury & Venus Rx" desc="Retrograde zones with pre/post shadow periods. Historically correlated with volatility spikes." image="/feature-mercury.png" delay={860} />
+          <FeatureCard icon="🌑" title="Eclipse Windows" desc="Solar and lunar eclipse markers with glow effects. Major cycle turning points for crypto." image="/feature-eclipse.png" delay={920} />
+          <FeatureCard icon="🔄" title="Hurst Cycle Arcs" desc="Three nested cycle periods (15/30/60 bar) with translation labels. See cycle troughs before they hit." image="/feature-hurst.png" delay={980} />
+          <FeatureCard icon="⏱" title="Gann Countdown" desc="Custom anchor dates with T+7 through T+360 markers. Track time cycles from any pivot." image="/feature-gann.png" delay={1040} />
+          <FeatureCard icon="📊" title="Benner Cycle" desc="Phase ribbons and background bands. Classifies years as good, hard, or panic since 1875." image="/feature-benner.png" delay={1100} />
+          <FeatureCard icon="🌐" title="Lunar Node Ribbon" desc="18.6-year nodal cycle with zodiac position, ingress markers, and McWhirter labels." image="/feature-lunar-node.png" delay={1160} />
+          <FeatureCard icon="🪐" title="Planetary Conjunctions" desc="Jupiter-Saturn and Saturn-Pluto hard aspects. The longest-cycle timing framework in the toolkit." image="/feature-conjunctions.png" delay={1220} />
+          <FeatureCard icon="⭐" title="Cosmic Confluence Score" desc="Real-time 0–10 score combining all active layers. Heat strip visualization shows density at a glance." image="/feature-cosmic-score.png" delay={1280} />
+        </div>
+      </section>
+
+      {/* ══════════════════════════════════════
          2. CONVERGENCE CALLOUT
          ══════════════════════════════════════ */}
       <section style={{ textAlign: 'center', padding: '80px 24px', maxWidth: 700, margin: '0 auto' }}>
@@ -908,28 +965,6 @@ function LandingPage() {
         />
         <div style={{ background: C.bgCard, borderRadius: 12, border: `1px solid ${C.border}`, padding: '4px 0', overflow: 'hidden' }}>
           <ComparisonTable />
-        </div>
-      </Section>
-
-      {/* ══════════════════════════════════════
-         4. FEATURE SHOWCASE
-         ══════════════════════════════════════ */}
-      <Section id="features">
-        <SectionTitle
-          tag="Overlay Layers"
-          title="Every Cycle Framework, One Chart"
-          subtitle="Toggle between 16 independent overlay layers. Each one adds a timing dimension that traditional charting misses."
-        />
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, justifyContent: 'center' }}>
-          <FeatureCard icon={'\uD83C\uDF11'} title="Moon Phases" desc="New & full moon markers with supermoon highlighting. See lunar rhythm on every timeframe." color={C.gold} image="/feature-moon.png" onImageClick={openLightbox} />
-          <FeatureCard icon={'\u267B\uFE0F'} title="Mercury & Venus Rx" desc="Retrograde zones with pre/post shadow periods. Historically correlated with volatility spikes." color={C.pink} image="/feature-mercury.png" onImageClick={openLightbox} />
-          <FeatureCard icon={'\uD83C\uDF1E'} title="Eclipse Windows" desc="Solar and lunar eclipse markers with glow effects. Major cycle turning points for crypto." color={C.orange} image="/feature-eclipse.png" onImageClick={openLightbox} />
-          <FeatureCard icon={'\uD83D\uDD04'} title="Hurst Cycle Arcs" desc="Three nested cycle periods (15/30/60 bar) with translation labels. See cycle troughs before they hit." color={C.textSec} image="/feature-hurst.png" onImageClick={openLightbox} />
-          <FeatureCard icon={'\u23F1\uFE0F'} title="Gann Countdown" desc="Custom anchor dates with T+7 through T+360 markers. July 27, 2024 — Trump's Nashville Bitcoin speech. T+360 days later: major top." color={C.orange} image="/feature-gann.png" onImageClick={openLightbox} />
-          <FeatureCard icon={'\uD83D\uDCC8'} title="Benner Cycle" desc="Phase ribbons and background bands. Classifies years as good, hard, or panic since 1875." color={C.teal} image="/feature-benner.png" onImageClick={openLightbox} />
-          <FeatureCard icon={'\uD83C\uDF10'} title="Lunar Node Ribbon" desc="18.6-year nodal cycle with zodiac position, ingress markers, and McWhirter labels." color={C.purple} image="/feature-lunar-node.png" onImageClick={openLightbox} />
-          <FeatureCard icon={'\u2643'} title="Planetary Conjunctions" desc="Jupiter-Saturn and Saturn-Pluto hard aspects. The longest-cycle timing framework in the toolkit." color={C.blue} image="/feature-conjunctions.png" onImageClick={openLightbox} />
-          <FeatureCard icon={'\u2605'} title="Cosmic Confluence Score" desc="Real-time 0-10 score combining all active layers. Heat strip visualization shows density at a glance." color={C.accent} image="/feature-cosmic-score.png" onImageClick={openLightbox} />
         </div>
       </Section>
 
