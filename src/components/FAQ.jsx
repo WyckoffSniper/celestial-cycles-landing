@@ -1,0 +1,93 @@
+import { useState } from 'react';
+import { F } from '../tokens';
+
+/* ===================================================
+   FAQ ACCORDION ITEM
+   =================================================== */
+function FaqItem({ question, answer }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <div style={{
+      background: 'var(--bg-card)', border: '1px solid var(--border)',
+      borderRadius: 'var(--radius-md)', marginBottom: 8, overflow: 'hidden',
+    }}>
+      <button
+        className="faq-btn"
+        onClick={() => setOpen(v => !v)}
+        style={{
+          width: '100%', background: 'none', border: 'none', cursor: 'pointer',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          padding: '20px 24px', textAlign: 'left', transition: 'background 0.2s',
+        }}
+        onMouseEnter={e => e.currentTarget.style.background = 'var(--bg-card-hover)'}
+        onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+      >
+        <span style={{
+          fontFamily: F.body, fontSize: 15, fontWeight: 600,
+          color: 'var(--text-primary)', lineHeight: 1.4, paddingRight: 16,
+        }}>{question}</span>
+        <span style={{
+          fontSize: 18, color: 'var(--text-tertiary)',
+          transition: 'transform 0.3s', transform: open ? 'rotate(45deg)' : 'rotate(0)',
+          flexShrink: 0, lineHeight: 1,
+        }}>+</span>
+      </button>
+      <div style={{
+        maxHeight: open ? 400 : 0, overflow: 'hidden',
+        transition: 'max-height 0.4s ease',
+      }}>
+        <p style={{
+          fontFamily: F.body, fontSize: 14, color: 'var(--text-secondary)',
+          lineHeight: 1.7, padding: '0 24px 20px 24px',
+        }}>{answer}</p>
+      </div>
+    </div>
+  );
+}
+
+/* ===================================================
+   FAQ SECTION
+   =================================================== */
+export default function FAQ() {
+  return (
+    <section className="faq-section" id="faq" style={{ padding: '120px 24px 80px' }}>
+      <div style={{ textAlign: 'center', marginBottom: 48 }}>
+        <div style={{
+          fontSize: 12, fontWeight: 500, letterSpacing: '0.15em',
+          textTransform: 'uppercase', color: 'var(--gold)', marginBottom: 16,
+        }}>FAQ</div>
+        <h2 style={{
+          fontFamily: F.display, fontWeight: 800,
+          fontSize: 'clamp(28px, 4vw, 44px)', lineHeight: 1.1,
+          letterSpacing: '-0.03em', color: 'var(--text-primary)',
+        }}>Common Questions</h2>
+      </div>
+      <div style={{ maxWidth: 680, margin: '0 auto' }}>
+        <FaqItem
+          question="What data sources does Cosmic Charts use?"
+          answer="Live OHLCV data from Bybit and Binance. No API keys required — just open the chart and go."
+        />
+        <FaqItem
+          question="Is this astrology?"
+          answer="No. We overlay empirically observable astronomical events (eclipses, planetary conjunctions, lunar cycles) alongside established financial timing frameworks (Hurst, Gann, Benner). You decide what matters to your strategy."
+        />
+        <FaqItem
+          question="Can I use this with TradingView?"
+          answer="Cosmic Charts is a standalone web app — no TradingView integration needed. It includes standard indicators (MA, RSI) alongside the cycle overlays. If you need Pine Script, TradingView is the better choice for that."
+        />
+        <FaqItem
+          question="What's the Cosmic Confluence Score?"
+          answer="A real-time 0-10 score that combines all your active overlay layers into a single number. Higher scores mean more frameworks are aligned at that point in time."
+        />
+        <FaqItem
+          question="Can I cancel anytime?"
+          answer="Yes. All plans are month-to-month with no commitment. Cancel from your account settings and you keep access through the end of your billing period."
+        />
+        <FaqItem
+          question="Do you support assets other than crypto?"
+          answer="Currently crypto only (BTC, ETH, and 50+ pairs). Multi-asset support (S&P 500, Gold, Silver, Oil, DXY) is on the roadmap."
+        />
+      </div>
+    </section>
+  );
+}
