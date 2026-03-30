@@ -20,7 +20,7 @@ export default function Hero() {
         fontFamily: F.body, fontSize: 12, fontWeight: 500,
         letterSpacing: '0.15em', textTransform: 'uppercase',
         color: 'var(--gold)', marginBottom: 16,
-      }}>Multi-Framework Cycle Analysis</div>
+      }}>25+ Cycle Overlays &middot; AI-Powered Analysis</div>
 
       <h1 className="hero-anim hero-anim-1" style={{
         fontFamily: F.display, fontWeight: 800,
@@ -33,10 +33,11 @@ export default function Hero() {
 
       <p className="hero-anim hero-anim-2" style={{
         fontFamily: F.body, fontSize: 17, lineHeight: 1.6,
-        color: 'var(--text-secondary)', maxWidth: 560, margin: '0 auto 32px',
+        color: 'var(--text-secondary)', maxWidth: 600, margin: '0 auto 32px',
       }}>
-        Moon phases, retrogrades, eclipses, Hurst arcs, Gann countdowns, planetary
-        alignments &mdash; overlaid on live crypto charts. One tool, every cycle framework.
+        Moon phases, retrogrades, eclipses, Hurst arcs, Gann countdowns, FOMC dates,
+        solar flares, planetary alignments &mdash; plus an Intelligence Hub with AI
+        confluence narration. One tool, every cycle framework, on live crypto charts.
       </p>
 
       <div className="hero-anim hero-anim-3" style={{ display: 'flex', gap: 12, justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -73,7 +74,7 @@ export default function Hero() {
         }}>
           <img
             src="/hero-chart.png"
-            alt="Cosmic Charts live chart with moon phases, Hurst arcs, and Mercury Rx overlays"
+            alt="Cosmic Charts live chart with moon phases, Hurst arcs, FOMC dates, and Mercury Rx overlays"
             style={{ width: '100%', display: 'block' }}
           />
         </div>

@@ -33,7 +33,7 @@ function FaqItem({ question, answer }) {
         }}>+</span>
       </button>
       <div style={{
-        maxHeight: open ? 400 : 0, overflow: 'hidden',
+        maxHeight: open ? 500 : 0, overflow: 'hidden',
         transition: 'max-height 0.4s ease',
       }}>
         <p style={{
@@ -64,20 +64,32 @@ export default function FAQ() {
       </div>
       <div style={{ maxWidth: 680, margin: '0 auto' }}>
         <FaqItem
+          question="What cycles does Cosmic Charts track?"
+          answer="Five categories of overlays across 25+ indicators. Astronomical Cycles: moon phases, eclipses, Mercury and Venus retrograde, lunar node cycle, planetary aspects, planet ingresses, Mercury cazimi, and seasonal dates. Cycles and Timing: Hurst arcs, Gann countdown, Benner cycle, and BTC halvings. Macro: FOMC meeting dates, triple witching, liquidity cycle, and Puetz crash windows. Space Weather: solar cycle ribbon, solar flares, geomagnetic storms, and CME impact windows. Plus an Intelligence Hub with confluence scoring and AI analysis."
+        />
+        <FaqItem
+          question="How does the AI Cycle Analyst work?"
+          answer="The Intelligence Hub combines all your active overlays into a real-time convergence card and cosmic score. The AI Cycle Analyst (Elite tier) goes further: it synthesizes every active layer with current price action to generate plain-language insights about what the cycle confluence means right now and what to watch for next. Think of it as a second opinion that reads all your overlays at once."
+        />
+        <FaqItem
+          question="What's included in the free plan?"
+          answer="The free tier includes live crypto charts on all pairs, moon phase overlays (new, full, quarter, and supermoons), Hurst cycle arcs with translation detection, seasonal dates and cross-quarter days, the solar cycle ribbon, a convergence card, screenshot export, and unlimited timeframes. No credit card required."
+        />
+        <FaqItem
+          question="How do FOMC dates and triple witching help?"
+          answer="FOMC meeting dates mark the 8 times per year the Federal Reserve decides interest rates \u2014 the single biggest macro catalyst for financial markets. Triple witching marks quarterly options and futures expiration on the third Friday of March, June, September, and December. Both events create predictable volatility windows. Overlaying them on your cycle chart lets you see when macro catalysts align with cycle turning points."
+        />
+        <FaqItem
           question="What data sources does Cosmic Charts use?"
-          answer="Live OHLCV data from Bybit and Binance. No API keys required — just open the chart and go."
+          answer="Live OHLCV data from Bybit and Binance. Astronomical data is computed from JPL ephemeris. Solar and geomagnetic data comes from NOAA SWPC. No API keys required \u2014 just open the chart and go."
         />
         <FaqItem
           question="Is this astrology?"
-          answer="No. We overlay empirically observable astronomical events (eclipses, planetary conjunctions, lunar cycles) alongside established financial timing frameworks (Hurst, Gann, Benner). You decide what matters to your strategy."
+          answer="No. We overlay empirically observable astronomical events (eclipses, planetary conjunctions, lunar cycles) alongside established financial timing frameworks (Hurst, Gann, Benner) and macro catalysts (FOMC, triple witching). You decide what matters to your strategy."
         />
         <FaqItem
           question="Can I use this with TradingView?"
-          answer="Cosmic Charts is a standalone web app — no TradingView integration needed. It includes standard indicators (MA, RSI) alongside the cycle overlays. If you need Pine Script, TradingView is the better choice for that."
-        />
-        <FaqItem
-          question="What's the Cosmic Confluence Score?"
-          answer="A real-time 0-10 score that combines all your active overlay layers into a single number. Higher scores mean more frameworks are aligned at that point in time."
+          answer="Cosmic Charts is a standalone web app \u2014 no TradingView integration needed. It includes standard indicators (MA, RSI) alongside the cycle overlays. If you need Pine Script, TradingView is the better choice for that."
         />
         <FaqItem
           question="Can I cancel anytime?"

@@ -1,6 +1,85 @@
 import { F, APP_URL } from '../tokens';
 
 /* ===================================================
+   TIER FEATURE DATA — from featureGate.js
+   =================================================== */
+const PLAN_FEATURES = {
+  free: [
+    'Live crypto charts (all pairs)',
+    'Moon phase overlays',
+    'Hurst cycle arcs',
+    'Seasonal dates & cross-quarter days',
+    'Solar cycle ribbon',
+    'Convergence card',
+    'Screenshot export',
+    'Unlimited timeframes',
+  ],
+  pro: [
+    'Everything in Free',
+    'Eclipse markers with glow',
+    'Mercury & Venus retrograde',
+    'Lunar node cycle ribbon',
+    'Gann countdown system',
+    'Benner cycle bands',
+    'BTC halving markers',
+    'FOMC dates overlay',
+    'Triple witching dates',
+    'Liquidity cycle wave',
+    'Cosmic confluence score',
+    'Solar flares & geomagnetic storms',
+    'Preset layouts',
+  ],
+  elite: [
+    'Everything in Pro',
+    'Planetary aspects (Jupiter-Saturn, Saturn-Pluto, Mars)',
+    'Planet ingresses',
+    'Mercury cazimi',
+    'Puetz crash windows',
+    'CME impact windows',
+    'AI Cycle Analyst',
+    'Priority support',
+  ],
+};
+
+/* Feature comparison rows grouped by category for the table */
+const COMPARISON_ROWS = [
+  { category: 'Astronomical Cycles', features: [
+    { name: 'Moon phases', free: true, pro: true, elite: true },
+    { name: 'Seasonal dates', free: true, pro: true, elite: true },
+    { name: 'Eclipse markers', free: false, pro: true, elite: true },
+    { name: 'Mercury retrograde', free: false, pro: true, elite: true },
+    { name: 'Venus retrograde', free: false, pro: true, elite: true },
+    { name: 'Lunar node cycle', free: false, pro: true, elite: true },
+    { name: 'Mercury cazimi', free: false, pro: false, elite: true },
+    { name: 'Planetary aspects', free: false, pro: false, elite: true },
+    { name: 'Planet ingresses', free: false, pro: false, elite: true },
+  ]},
+  { category: 'Cycles & Timing', features: [
+    { name: 'Hurst cycles', free: true, pro: true, elite: true },
+    { name: 'Gann countdown', free: false, pro: true, elite: true },
+    { name: 'Benner cycle', free: false, pro: true, elite: true },
+    { name: 'BTC halvings', free: false, pro: true, elite: true },
+  ]},
+  { category: 'Macro', features: [
+    { name: 'FOMC dates', free: false, pro: true, elite: true },
+    { name: 'Triple witching', free: false, pro: true, elite: true },
+    { name: 'Liquidity cycle', free: false, pro: true, elite: true },
+    { name: 'Puetz crash window', free: false, pro: false, elite: true },
+  ]},
+  { category: 'Space Weather', features: [
+    { name: 'Solar cycle ribbon', free: true, pro: true, elite: true },
+    { name: 'Solar flares', free: false, pro: true, elite: true },
+    { name: 'Geomagnetic storms', free: false, pro: true, elite: true },
+    { name: 'CME windows', free: false, pro: false, elite: true },
+  ]},
+  { category: 'Intelligence Hub', features: [
+    { name: 'Convergence card', free: true, pro: true, elite: true },
+    { name: 'Cosmic score', free: false, pro: true, elite: true },
+    { name: 'AI Cycle Analyst', free: false, pro: false, elite: true },
+  ]},
+];
+
+/* ===================================================
    PRICING CARD
    =================================================== */
 function PricingCard({ name, price, period, features, popular, ctaLabel, ctaHref, delay = 0 }) {
@@ -117,6 +196,70 @@ function PricingCard({ name, price, period, features, popular, ctaLabel, ctaHref
 }
 
 /* ===================================================
+   COMPARISON TABLE
+   =================================================== */
+function ComparisonTable() {
+  const thStyle = {
+    fontSize: 11, fontWeight: 600, letterSpacing: '0.08em',
+    textTransform: 'uppercase', padding: '14px 20px',
+  };
+
+  return (
+    <div style={{
+      background: 'rgba(8,8,13,0.5)', border: '1px solid rgba(255,255,255,0.04)',
+      borderRadius: 'var(--radius-lg)', overflow: 'hidden',
+      maxWidth: 800, margin: '48px auto 0',
+      boxShadow: 'inset 0 2px 8px rgba(0,0,0,0.3)',
+      opacity: 0, animation: 'fadeSlideIn 0.7s var(--ease-smooth) 0.4s forwards',
+    }}>
+      {/* Header */}
+      <div style={{
+        display: 'grid', gridTemplateColumns: '1fr 100px 100px 100px',
+        background: 'rgba(255,255,255,0.02)',
+        borderBottom: '1px solid rgba(255,255,255,0.04)',
+      }}>
+        <div style={{ ...thStyle, color: 'var(--text-tertiary)', textAlign: 'left' }}>Feature</div>
+        <div style={{ ...thStyle, color: 'var(--text-secondary)', textAlign: 'center' }}>Free</div>
+        <div style={{ ...thStyle, color: 'var(--gold)', textAlign: 'center' }}>Pro</div>
+        <div style={{ ...thStyle, color: '#CE93D8', textAlign: 'center' }}>Elite</div>
+      </div>
+      {/* Rows by category */}
+      {COMPARISON_ROWS.map((group) => (
+        <div key={group.category}>
+          {/* Category header */}
+          <div style={{
+            padding: '12px 20px', fontSize: 11, fontWeight: 700,
+            letterSpacing: '0.1em', textTransform: 'uppercase',
+            color: 'var(--gold)', background: 'rgba(196,151,70,0.04)',
+            borderBottom: '1px solid rgba(255,255,255,0.03)',
+            borderTop: '1px solid rgba(255,255,255,0.03)',
+          }}>{group.category}</div>
+          {/* Feature rows */}
+          {group.features.map((row, i) => (
+            <div key={row.name} className="compare-row" style={{
+              display: 'grid', gridTemplateColumns: '1fr 100px 100px 100px',
+              padding: '12px 20px', transition: 'background 0.2s',
+              borderBottom: i < group.features.length - 1 ? '1px solid rgba(255,255,255,0.02)' : 'none',
+            }}
+            onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.02)'}
+            onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
+            >
+              <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{row.name}</div>
+              {['free', 'pro', 'elite'].map(plan => (
+                <div key={plan} style={{
+                  textAlign: 'center', fontSize: 14,
+                  color: row[plan] ? 'var(--gold)' : 'var(--text-tertiary)',
+                }}>{row[plan] ? '\u2713' : '\u2014'}</div>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* ===================================================
    PRICING SECTION
    =================================================== */
 export default function Pricing() {
@@ -142,19 +285,13 @@ export default function Pricing() {
       <div style={{
         display: 'flex', flexWrap: 'wrap', gap: 20,
         justifyContent: 'center', alignItems: 'stretch',
-        maxWidth: 1000, margin: '0 auto',
+        maxWidth: 1080, margin: '0 auto',
       }}>
         <PricingCard
           name="Free"
           price="$0"
-          features={[
-            'Live crypto charts (all pairs)',
-            'Moon phase overlays',
-            'Hurst cycle arcs',
-            'Seasonal date markers',
-            'Unlimited timeframes',
-          ]}
-          ctaLabel="Start Free"
+          features={PLAN_FEATURES.free}
+          ctaLabel="Get Started Free"
           delay={0}
         />
         <PricingCard
@@ -162,16 +299,8 @@ export default function Pricing() {
           price="$9.95"
           period="mo"
           popular
-          features={[
-            'Everything in Free',
-            'Mercury & Venus Retrograde',
-            'Eclipse markers with glow',
-            'Gann countdown system',
-            'Benner cycle bands',
-            'Lunar node ribbon',
-            'Cosmic confluence score',
-          ]}
-          ctaLabel="Upgrade to Pro"
+          features={PLAN_FEATURES.pro}
+          ctaLabel="Start Pro"
           ctaHref={`${APP_URL}?upgrade=pro`}
           delay={100}
         />
@@ -179,20 +308,15 @@ export default function Pricing() {
           name="Elite"
           price="$19.95"
           period="mo"
-          features={[
-            'Everything in Pro',
-            'Jupiter-Saturn conjunctions',
-            'Saturn-Pluto hard aspects',
-            'Mars trigger overlay',
-            'Planet sign ingresses',
-            'Screenshot export',
-            'Priority support',
-          ]}
+          features={PLAN_FEATURES.elite}
           ctaLabel="Go Elite"
           ctaHref={`${APP_URL}?upgrade=elite`}
           delay={200}
         />
       </div>
+
+      {/* Full comparison table */}
+      <ComparisonTable />
     </section>
   );
 }

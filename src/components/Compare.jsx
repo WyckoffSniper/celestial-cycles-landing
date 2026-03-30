@@ -7,12 +7,19 @@ function ComparisonTable() {
   const rows = [
     ['Moon Phase Overlays',           true,  false],
     ['Mercury & Venus Retrograde',    true,  false],
-    ['Eclipse Markers with Glow',     true,  false],
+    ['Eclipse Markers',               true,  false],
     ['Hurst Cycle Arcs',              true,  false],
     ['Gann Countdown System',         true,  false],
     ['Benner Cycle Bands',            true,  false],
     ['Lunar Node Ribbon',             true,  false],
-    ['Jupiter-Saturn Conjunctions',   true,  false],
+    ['Planetary Aspects & Ingresses', true,  false],
+    ['FOMC Meeting Dates',            true,  false],
+    ['Triple Witching Dates',         true,  false],
+    ['Liquidity Cycle Wave',          true,  false],
+    ['Puetz Crash Windows',           true,  false],
+    ['Solar Flares & Geomagnetic',    true,  false],
+    ['CME Impact Windows',            true,  false],
+    ['AI Cycle Analyst',              true,  false],
     ['Cosmic Confluence Score',       true,  false],
     ['Multi-Framework Overlap',       true,  false],
     ['Standard Indicators (MA, RSI)', true,  true ],
@@ -80,10 +87,11 @@ export default function Compare() {
         }}>TradingView Shows Price. We Show Timing.</h2>
         <p style={{
           fontFamily: F.body, fontSize: 15, lineHeight: 1.6,
-          color: 'var(--text-secondary)', maxWidth: 540, margin: '0 auto',
+          color: 'var(--text-secondary)', maxWidth: 560, margin: '0 auto',
         }}>
           Standard charting platforms give you lagging indicators. Cosmic Charts gives you
-          the timing frameworks that move ahead of price.
+          FOMC dates, triple witching, Puetz crash windows, AI confluence analysis, and 20+
+          cycle frameworks that move ahead of price.
         </p>
       </div>
       <ComparisonTable />
