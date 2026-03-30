@@ -12,6 +12,7 @@ const PLAN_FEATURES = {
     'Solar cycle ribbon',
     'Convergence card',
     'Screenshot export',
+    "What's happening now",
     'Unlimited timeframes',
   ],
   pro: [
@@ -74,6 +75,8 @@ const COMPARISON_ROWS = [
   ]},
   { category: 'Intelligence Hub', features: [
     { name: 'Convergence card', free: true, pro: true, elite: true },
+    { name: "What's happening now", free: true, pro: true, elite: true },
+    { name: 'Screenshot & export', free: true, pro: true, elite: true },
     { name: 'Cosmic score', free: false, pro: true, elite: true },
     { name: 'AI Cycle Analyst', free: false, pro: false, elite: true },
   ]},
@@ -245,10 +248,14 @@ function ComparisonTable() {
             onMouseLeave={e => e.currentTarget.style.background = 'transparent'}
             >
               <div style={{ fontSize: 13, color: 'var(--text-secondary)' }}>{row.name}</div>
-              {['free', 'pro', 'elite'].map(plan => (
+              {[
+                { plan: 'free',  checkColor: '#888' },
+                { plan: 'pro',   checkColor: '#c8a84e' },
+                { plan: 'elite', checkColor: '#5dcaa5' },
+              ].map(({ plan, checkColor }) => (
                 <div key={plan} style={{
                   textAlign: 'center', fontSize: 14,
-                  color: row[plan] ? 'var(--gold)' : 'var(--text-tertiary)',
+                  color: row[plan] ? checkColor : 'rgba(255,255,255,0.15)',
                 }}>{row[plan] ? '\u2713' : '\u2014'}</div>
               ))}
             </div>

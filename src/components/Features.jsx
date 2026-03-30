@@ -147,6 +147,8 @@ const CATEGORIES = [
     overlays: [
       { name: 'Cosmic score', tier: 'pro', desc: 'Composite 0\u2013100 confluence score combining all active cycle data into a single reading.' },
       { name: 'Convergence card', tier: 'free', desc: 'At-a-glance panel summarizing which overlays are currently signaling and in which direction.' },
+      { name: "What's happening now", tier: 'free', desc: 'See upcoming cycle events for the next 14 days at a glance.' },
+      { name: 'Screenshot & export', tier: 'free', desc: 'Export your chart as an image to share your analysis.' },
       { name: 'AI Cycle Analyst', tier: 'elite', desc: 'AI-powered analysis combining all active cycle data with current price action to generate actionable insights.' },
       { name: 'Historical pattern matching', tier: 'elite', desc: 'Find historical dates where the same cycle combination occurred and see what happened next. Coming soon.' },
     ],
