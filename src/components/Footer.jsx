@@ -24,6 +24,9 @@ export default function Footer() {
         <div style={{ fontSize: 12, color: 'var(--text-tertiary)' }}>
           &copy; 2026 Wyckoff Labs. All rights reserved.
         </div>
+        <a href="https://elevenlabs.io/startup-grants" target="_blank" rel="noopener noreferrer" style={{ marginTop: 12, display: 'inline-block' }}>
+          <img src="https://eleven-public-cdn.elevenlabs.io/payloadcms/cy7rxce8uki-IIElevenLabsGrants%201.webp" alt="Supported by ElevenLabs Grants" style={{ width: 150, opacity: 0.6, transition: 'opacity 0.2s' }} onMouseEnter={e => e.currentTarget.style.opacity = '1'} onMouseLeave={e => e.currentTarget.style.opacity = '0.6'} />
+        </a>
       </div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 0, flexWrap: 'wrap' }}>
         {[
