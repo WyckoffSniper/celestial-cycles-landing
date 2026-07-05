@@ -20,7 +20,7 @@ export default function Hero() {
         fontFamily: F.body, fontSize: 12, fontWeight: 500,
         letterSpacing: '0.15em', textTransform: 'uppercase',
         color: 'var(--gold)', marginBottom: 16,
-      }}>25+ Cycle Overlays &middot; AI-Powered Analysis</div>
+      }}>40+ Cycle Overlays &middot; AI-Powered Analysis</div>
 
       <h1 className="hero-anim hero-anim-1" style={{
         fontFamily: F.display, fontWeight: 800,
