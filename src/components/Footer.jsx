@@ -34,6 +34,8 @@ export default function Footer() {
           { label: 'Compare', href: '#compare' },
           { label: 'Pricing', href: '#pricing' },
           { label: 'FAQ', href: '#faq' },
+          { label: 'Terms', href: 'https://cc.wyckofflabs.com/terms', external: true },
+          { label: 'Privacy', href: 'https://cc.wyckofflabs.com/privacy', external: true },
           { label: 'Launch App', href: APP_URL, external: true },
         ].map((l, i, arr) => (
           <span key={l.label}>
