@@ -77,11 +77,11 @@ export default function FAQ() {
         />
         <FaqItem
           question="How do FOMC dates and triple witching help?"
-          answer="FOMC meeting dates mark the 8 times per year the Federal Reserve decides interest rates \u2014 the single biggest macro catalyst for financial markets. Triple witching marks quarterly options and futures expiration on the third Friday of March, June, September, and December. Both events create predictable volatility windows. Overlaying them on your cycle chart lets you see when macro catalysts align with cycle turning points."
+          answer="FOMC meeting dates mark the 8 times per year the Federal Reserve decides interest rates — the single biggest macro catalyst for financial markets. Triple witching marks quarterly options and futures expiration on the third Friday of March, June, September, and December. Both events create predictable volatility windows. Overlaying them on your cycle chart lets you see when macro catalysts align with cycle turning points."
         />
         <FaqItem
           question="What data sources does Cosmic Charts use?"
-          answer="Live OHLCV data from Bybit and Binance. Astronomical data is computed from JPL ephemeris. Solar and geomagnetic data comes from NOAA SWPC. No API keys required \u2014 just open the chart and go."
+          answer="Live OHLCV data from Bybit and Binance. Astronomical data is computed from JPL ephemeris. Solar and geomagnetic data comes from NOAA SWPC. No API keys required — just open the chart and go."
         />
         <FaqItem
           question="Is this astrology?"
@@ -89,7 +89,7 @@ export default function FAQ() {
         />
         <FaqItem
           question="Can I use this with TradingView?"
-          answer="Cosmic Charts is a standalone web app \u2014 no TradingView integration needed. It includes standard indicators (MA, RSI) alongside the cycle overlays. If you need Pine Script, TradingView is the better choice for that."
+          answer="Cosmic Charts is a standalone web app — no TradingView integration needed. It includes standard indicators (MA, RSI) alongside the cycle overlays. If you need Pine Script, TradingView is the better choice for that."
         />
         <FaqItem
           question="Can I cancel anytime?"
